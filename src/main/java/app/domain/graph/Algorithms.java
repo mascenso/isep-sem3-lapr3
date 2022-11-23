@@ -157,9 +157,45 @@ public class Algorithms {
      */
     private static <V, E> void shortestPathDijkstra(Graph<V, E> g, V vOrig,
                                                     Comparator<E> ce, BinaryOperator<E> sum, E zero,
-                                                    boolean[] visited, V [] pathKeys, E [] dist) {
-        
-        throw new UnsupportedOperationException("Not supported yet.");
+                                                    boolean[] visited, V[] pathKeys, E[] dist) {
+
+
+        for (int i = 0; i < g.numVertices(); i++) {
+            dist[i] = null;
+            pathKeys[i] = null;
+            visited[i] = false;
+        }
+
+        dist[g.key(vOrig)] = zero;
+        pathKeys[g.key(vOrig)] = vOrig;
+
+        while (vOrig != null) {
+
+            int vOrigKey = g.key(vOrig);
+            visited[vOrigKey] = true;
+
+            for (V vAdj : g.adjVertices(vOrig)) {
+                Edge<V, E> e = g.edge(vOrig, vAdj);
+                int vAdjKey = g.key(vAdj);
+                if (!visited[vAdjKey] && (dist[vAdjKey] == null || ce.compare(dist[vAdjKey], sum.apply(dist[vOrigKey], e.getWeight())) > 0)) {
+                    dist[vAdjKey] = sum.apply(dist[vOrigKey], e.getWeight());
+                    pathKeys[vAdjKey] = vOrig;
+                }
+            }
+
+            vOrig = null;
+
+            E minDistance = null;
+
+            for (V vert : g.vertices()) {
+                int vVertKey = g.key(vert);
+                if (!visited[vVertKey] && dist[vVertKey] != null && (minDistance == null || ce.compare(dist[vVertKey], minDistance) < 0)) {
+                    vOrig = vert;
+                    minDistance = dist[vVertKey];
+                }
+            }
+        }
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
    
@@ -178,7 +214,34 @@ public class Algorithms {
                                         Comparator<E> ce, BinaryOperator<E> sum, E zero,
                                         LinkedList<V> shortPath) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        if (!g.validVertex(vOrig) || !g.validVertex(vDest))
+            return null;
+
+        if (vOrig.equals(vDest)) {
+            shortPath.add(vOrig);
+            return zero;
+        }
+
+        shortPath.clear();
+
+        int nVerts = g.numVertices();
+
+        boolean[] visited = new boolean[nVerts]; //default value: false
+        V[] pathKeys = (V[]) new Object[nVerts];
+        E[] dist = (E[]) new Object[nVerts];
+
+        shortestPathDijkstra(g, vOrig, ce, sum, zero, visited, pathKeys, dist);
+
+        if (dist[g.key(vDest)] != null) {
+            getPath(g, vOrig, vDest, pathKeys, shortPath);
+        }
+
+        return shortPath.isEmpty() ? null : dist[g.key(vDest)];
+
+
+        //throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     /** Shortest-path between a vertex and all other vertices
@@ -195,8 +258,34 @@ public class Algorithms {
     public static <V, E> boolean shortestPaths(Graph<V, E> g, V vOrig,
                                                Comparator<E> ce, BinaryOperator<E> sum, E zero,
                                                ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
+        if (!g.validVertex(vOrig))
+            return false;
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        int nVerts = g.numVertices();
+
+        boolean[] visited = new boolean[nVerts];
+        V[] pathKeys = (V[]) new Object[nVerts];
+        E[] dist = (E[]) new Object[nVerts];
+
+        shortestPathDijkstra(g, vOrig, ce, sum, zero, visited, pathKeys, dist);
+
+        dists.clear();
+        paths.clear();
+        for (int i = 0; i < nVerts; i++) {
+            paths.add(null);
+            dists.add(null);
+        }
+
+        for (int i = 0; i < nVerts; i++) {
+            LinkedList<V> shortPath = new LinkedList<>();
+            if (dist[i] != null)
+                getPath(g, vOrig, g.vertex(i), pathKeys, shortPath);
+            paths.set(i, shortPath);
+            dists.set(i, dist[i]);
+        }
+        return true;
+
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -210,9 +299,16 @@ public class Algorithms {
      * @param path     stack with the minimum path (correct order)
      */
     private static <V, E> void getPath(Graph<V, E> g, V vOrig, V vDest,
-                                       V [] pathKeys, LinkedList<V> path) {
+                                       V[] pathKeys, LinkedList<V> path) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        int destIdx = g.key(vDest);
+        if (pathKeys[destIdx] != null) {
+            path.addFirst(vDest);
+            if (!vOrig.equals(vDest)) {
+                getPath(g, vOrig, pathKeys[destIdx], pathKeys, path);
+            }
+        }
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Calculates the minimum distance graph using Floyd-Warshall
