@@ -281,7 +281,7 @@ public class MatrixGraph<V,E> extends CommonGraph<V,E> {
 
         sb.append("\nMatrix:\n");
 
-        sb.append("  ");
+        sb.append("   ");
         for (int i = 0 ; i < numVerts ; i++)
         {
             sb.append(" |  "+ i + " ");
@@ -291,7 +291,7 @@ public class MatrixGraph<V,E> extends CommonGraph<V,E> {
         // aligned only when vertices < 10
         for (int i = 0 ; i < numVerts ; i++)
         {
-            sb.append(" "+ i + " ");
+            sb.append(String.format("%4d", i));
             for (int j = 0 ; j < numVerts ; j++)
                 if(edgeMatrix[i][j] != null)
                     sb.append("|  X  ");
