@@ -33,8 +33,17 @@ public class Algorithms {
      * @param qdfs return LinkedList with vertices of depth-first search
      */
     private static <V, E> void DepthFirstSearch(Graph<V, E> g, V vOrig, boolean[] visited, LinkedList<V> qdfs) {
-
-        throw new UnsupportedOperationException("Not supported yet.");
+        int currIdx = g.key(vOrig);
+        visited[currIdx] = true;
+        qdfs.addLast(vOrig);
+        for (Edge<V, E> tmpEdge : g.outgoingEdges(vOrig)) {
+            V vDest = tmpEdge.getVDest();
+            int destIdx = g.key(vDest);
+            if (!visited[destIdx]) {
+                DepthFirstSearch(g, vDest, visited, qdfs);
+            }
+        }
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Performs depth-first search starting in a vertex
@@ -45,10 +54,17 @@ public class Algorithms {
      * @return a LinkedList with the vertices of depth-first search
      */
     public static <V, E> LinkedList<V> DepthFirstSearch(Graph<V, E> g, V vert) {
-        
+        LinkedList<V> result = null;
 
+        if (g.validVertex(vert)) {
+            boolean[] visited = new boolean[g.numVertices()];
+            result = new LinkedList<>();
 
-        throw new UnsupportedOperationException("Not supported yet.");
+            DepthFirstSearch(g, vert, visited, result);
+        }
+
+        return result;
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Returns all paths from vOrig to vDest
