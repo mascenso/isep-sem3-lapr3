@@ -361,7 +361,7 @@ public class Algorithms {
      * @param sum sum two elements of type E
      * @return the minimum distance graph
      */
-    public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
+    public static <V, E> Graph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
 
         int nVerts = g.numVertices();
 
@@ -392,14 +392,13 @@ public class Algorithms {
                                         e)       ;
 
                             }
-
                             else if (
                                     ce.compare(
                                             minDistGraph.edge(i, j).getWeight() ,
-                                            sum.apply(minDistGraph.edge(i, k).getWeight(), minDistGraph.edge(k, j).getWeight())
-                                    ) < 0 )
+                                            e
+                                    ) > 0 )
                             {
-                                minDistGraph.edge(i, j).setWeight(sum.apply(minDistGraph.edge(i, k).getWeight(), minDistGraph.edge(k, j).getWeight()));
+                                minDistGraph.edge(i, j).setWeight(e);
                         }
                         }
                         // if there is an edge from k to j, and the sum is less than the current value
@@ -407,7 +406,7 @@ public class Algorithms {
             }
         }
 
-        return (MatrixGraph<V, E>) minDistGraph;
+        return minDistGraph;
 
     }
 
