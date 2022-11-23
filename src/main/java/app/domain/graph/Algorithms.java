@@ -22,7 +22,31 @@ public class Algorithms {
      */
     public static <V, E> LinkedList<V> BreadthFirstSearch(Graph<V, E> g, V vert) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        LinkedList<V> verticesBFS = null;
+
+        if (g.validVertex(vert)) { //if vertice is in graph
+            verticesBFS = new LinkedList<>();
+
+            boolean[] visited = new boolean[g.numVertices()];
+
+            LinkedList<V> verticesBFS_aux = new LinkedList<>();
+            verticesBFS_aux.addFirst(vert);
+            visited[g.key(verticesBFS_aux.getFirst())] = true;
+            verticesBFS.add(vert);
+
+            while (!verticesBFS_aux.isEmpty()) {
+                for (Edge<V, E> tmpEdge : g.outgoingEdges(verticesBFS_aux.getFirst())) {
+                    if (!visited[g.key(tmpEdge.getVDest())]) {
+                        visited[g.key(tmpEdge.getVDest())] = true;
+                        verticesBFS_aux.addLast(tmpEdge.getVDest());
+                        verticesBFS.add(tmpEdge.getVDest());
+                    }
+                }
+                verticesBFS_aux.removeFirst();
+            }
+        }
+
+        return verticesBFS;
     }
 
     /** Performs depth-first search starting in a vertex
