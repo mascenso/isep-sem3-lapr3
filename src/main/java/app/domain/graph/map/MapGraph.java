@@ -4,10 +4,7 @@ import app.domain.graph.CommonGraph;
 import app.domain.graph.Edge;
 import app.domain.graph.Graph;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -35,8 +32,13 @@ public class MapGraph<V, E> extends CommonGraph<V, E> {
 
     @Override
     public Collection<V> adjVertices(V vert) {
-        
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!validVertex(vert))
+            return null;
+
+        MapVertex<V, E> vertex = mapVertices.get(vert);
+
+        return vertex.getAllAdjVerts();
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -108,7 +110,16 @@ public class MapGraph<V, E> extends CommonGraph<V, E> {
     @Override
     public Collection<Edge<V, E>> incomingEdges(V vert) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<Edge<V, E>> result = new LinkedList<>();
+
+        for (Edge<V, E> tmpEdge : edges()) {
+            if (tmpEdge.getVDest().equals(vert)) {
+                result.add(tmpEdge);
+            }
+        }
+
+        return result;
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
