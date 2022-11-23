@@ -2,7 +2,6 @@ package app.domain.graph.matrix;
 
 import app.domain.graph.Edge;
 import app.domain.graph.CommonGraph;
-import app.domain.graph.Edge;
 import app.domain.graph.Graph;
 
 import java.util.ArrayList;
@@ -120,8 +119,20 @@ public class MatrixGraph<V,E> extends CommonGraph<V,E> {
 
     @Override
     public Collection<Edge<V, E>> outgoingEdges(V vert) {
-        
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        int vertKey = key(vert);
+        if (vertKey == -1)
+            return null;
+
+        ArrayList<Edge<V, E>> outEdges = new ArrayList<>();
+
+        for (int i = 0; i < numVerts; i++)
+            if (edgeMatrix[vertKey][i] != null)
+                outEdges.add(edgeMatrix[vertKey][i]);
+
+        return outEdges;
+
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
