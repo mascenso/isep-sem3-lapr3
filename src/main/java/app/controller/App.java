@@ -1,5 +1,5 @@
 package app.controller;
-import app.domain.model.Company;
+import app.domain.model.Domain;
 import app.domain.model.UserRole;
 import app.domain.shared.Constants;
 
@@ -13,18 +13,18 @@ import java.util.Properties;
  */
 public class App {
 
-    private Company company;
+    private Domain domain;
 
     private App()
     {
         Properties props = getProperties();
-        this.company = new Company(props.getProperty(Constants.PARAMS_COMPANY_DESIGNATION));
+        this.domain = new Domain(props.getProperty(Constants.PARAMS_COMPANY_DESIGNATION));
         bootstrap();
     }
 
-    public Company getCompany()
+    public Domain getCompany()
     {
-        return this.company;
+        return this.domain;
     }
 
     private Properties getProperties()
@@ -52,8 +52,8 @@ public class App {
 
     private void bootstrap()
     {
-        this.company.getUserRoleStore().add(new UserRole("001", "Manager"));
-        this.company.getUserRoleStore().add(new UserRole("002", "Farmer"));
+        this.domain.getUserRoleStore().add(new UserRole("001", "Manager"));
+        this.domain.getUserRoleStore().add(new UserRole("002", "Farmer"));
     }
 
     // Extracted from https://www.javaworld.com/article/2073352/core-java/core-java-simply-singleton.html?page=2
