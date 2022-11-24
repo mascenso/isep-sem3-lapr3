@@ -217,12 +217,23 @@ class MapAlgorithmsTest {
         gExpected.addEdge("Porto", "Faro", 615);
 
         Collection<String> a = gExpected.adjVertices("Porto");
-        Collection<String> b = gObtained.adjVertices("Porto");
 
         for (String v : a) {
             assertEquals(gExpected.edge("Porto", v).getWeight(),
                          gObtained.edge("Porto", v).getWeight(), "Edge weight should be the same");
         }
-        assertEquals(a, b);
+
+        int totalDegreesExpected = 110;
+        //count total degrees
+        int totalDegreesObtained = 0;
+        for (String v : gObtained.vertices()) {
+            totalDegreesObtained += gObtained.outDegree(v);
+        }
+
+        assertEquals(110, totalDegreesObtained, "Total degrees should be the same");
+
+
+
+
     }
 }

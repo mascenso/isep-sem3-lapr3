@@ -361,7 +361,7 @@ public class Algorithms {
      * @param sum sum two elements of type E
      * @return the minimum distance graph
      */
-    public static <V, E> Graph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
+    public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
 
         int nVerts = g.numVertices();
 
@@ -406,7 +406,7 @@ public class Algorithms {
             }
         }
 
-        return minDistGraph;
+        return new MatrixGraph<>(minDistGraph);
 
     }
 
