@@ -46,15 +46,16 @@ public class Domain {
     }
 
     public void addSpot(String spotID, double lat, double lng, String spotTypeID ){
-        this.spotsNet.addSpot(spotID, lat, lng, spotTypeID);
+        Entity entity = new Entity(spotTypeID);
+        this.spotsNet.addSpot(spotID, lat, lng, entity);
     }
 
     public Collection<Spot> getAdjacentSpots(String spotID) {
         return spotsNet.getAdjacentSpots(spotID);
     }
 
-    public void addRoute(String spotID1, String spotID2, double meters , int cabazes){
-        this.spotsNet.addRoute(spotID1, spotID2, meters, cabazes);
+    public void addRoute(String spotID1, String spotID2, double meters){
+        this.spotsNet.addRoute(spotID1, spotID2, meters);
     }
 
     /**

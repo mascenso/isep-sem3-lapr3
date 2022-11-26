@@ -8,11 +8,11 @@ import java.util.Collection;
 public class SpotsNet {
 
     private static class Route {
-        public final int cabazes;
+
         public final double meters;
 
-        public Route(double meters, int cabazes) {
-            this.cabazes = cabazes;
+        public Route(double meters) {
+
             this.meters = meters;
         }
 
@@ -28,15 +28,15 @@ public class SpotsNet {
         spots = new MapGraph<>(true);
     }
 
-    public void addSpot(String spotID, double lat, double lng, String spotTypeID ){
-        Spot spot = new Spot(spotID, lat, lng, spotTypeID);
+    public void addSpot(String spotID, double lat, double lng, Entity entity ){
+        Spot spot = new Spot(spotID, lat, lng, entity);
         spots.addVertex(spot);
     }
 
-    public void addRoute(String spotID1, String spotID2, double distance, Integer cabazes){
+    public void addRoute(String spotID1, String spotID2, double distance){
         Spot spot1 = new Spot(spotID1);
         Spot spot2 = new Spot(spotID2);
-        Route rt = new Route(distance, cabazes);
+        Route rt = new Route(distance);
 
         spots.addEdge(spot1, spot2, rt);
     }

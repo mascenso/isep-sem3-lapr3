@@ -7,7 +7,7 @@ public class Spot {
     private String spotID;
     private double lat;
     private double lng;
-    private String spotTypeID;
+    private Entity entity;
 
     public Spot() {
     }
@@ -16,14 +16,14 @@ public class Spot {
         this.spotID = spotID;
         this.lat = 0; //TODO
         this.lng = 0; //TODO
-        this.spotTypeID = "C1"; //TODO
+        this.entity = new Entity();
     }
 
-    public Spot(String spotID, double lat, double lng, String spotTypeID ){
+    public Spot(String spotID, double lat, double lng, Entity entity){
         this.spotID = spotID;
         this.lat = lat;
         this.lng = lng;
-        this.spotTypeID = spotTypeID;
+        this.entity = entity;
     }
 
     public void setSpotID(String spotID) {
@@ -38,8 +38,8 @@ public class Spot {
         this.lng = lng;
     }
 
-    public void setSpotTypeID(String spotTypeID) {
-        this.spotTypeID = spotTypeID;
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 
     @Override
