@@ -2,9 +2,7 @@ package app.domain.graph;
 
 import app.domain.graph.matrix.MatrixGraph;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.function.BinaryOperator;
 
 /**
@@ -410,4 +408,29 @@ public class Algorithms {
 
     }
 
+    public static <V, E> Graph<V,E> getMinimumSpanTreeKruskal(Graph<V,E> g, Comparator<E> ce) {
+
+        int nVerts = g.numVertices();
+        Graph<V, E> mst = g.clone();
+
+        List<Edge<V,E>> lstEdges = new ArrayList<>(mst.edges());
+
+        for (Edge<V,E> e : mst.edges()) {
+            lstEdges.add(e);
+            mst.removeEdge(e.getVOrig(), e.getVDest());
+        }
+
+        lstEdges.sort((e1,e2) -> ce.compare(e1.getWeight(), e2.getWeight()));
+
+        System.out.println("Edges: " + lstEdges);
+
+        for (Edge<V,E> e : lstEdges) {
+            LinkedList<V> connectedVerts = DepthFirstSearch(mst, e.getVOrig());
+            if (!connectedVerts.contains(e.getVDest()))
+                mst.addEdge(e.getVOrig(), e.getVDest(), e.getWeight());
+        }
+
+        System.out.println(mst);
+        return mst;
+    }
 }

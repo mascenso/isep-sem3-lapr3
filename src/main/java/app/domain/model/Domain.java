@@ -91,7 +91,7 @@ public class Domain {
      * US305 - Obtain MST for all nodes in the graph
      */
     public void obtainMST() {
-        throw new UnsupportedOperationException("Not supported yet.");
+            spotsNet.getMinimumSpanTree();
     }
 
 

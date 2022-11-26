@@ -76,6 +76,11 @@ class DomainTest {
         Collection<Spot> a = instance.getAdjacentSpots("CT1");
         System.out.println(instance.getSpotsNet());
         System.out.println(a);
-
     }
+
+    @Test
+    void kruskal() {
+            instance.obtainMST();
+    }
+
 }

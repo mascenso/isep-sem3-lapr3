@@ -1,13 +1,15 @@
 package app.domain.model;
 
+import app.domain.graph.Algorithms;
+import app.domain.graph.Edge;
 import app.domain.graph.Graph;
 import app.domain.graph.map.MapGraph;
 
-import java.util.Collection;
+import java.util.*;
 
 public class SpotsNet {
 
-    private static class Route {
+    private static class Route implements Comparable<Route>{
 
         public final double meters;
 
@@ -20,6 +22,11 @@ public class SpotsNet {
         public String toString() {
             return meters + "meters";
         }
+
+        @Override
+        public int compareTo(Route o) {
+            return Double.compare(this.meters, o.meters);
+        }
     }
 
     final private Graph<Spot, Route> spots;
@@ -27,6 +34,17 @@ public class SpotsNet {
     public SpotsNet(){
         spots = new MapGraph<>(true);
     }
+
+    public Graph<Spot, Route> getSpots() {
+        return spots;
+    }
+
+    public Route getRoute(Spot s1, Spot s2){
+        return spots.edge(s1, s2).getWeight();
+    }
+
+
+
 
     public void addSpot(String spotID, double lat, double lng, Entity entity ){
         Spot spot = new Spot(spotID, lat, lng, entity);
@@ -39,6 +57,17 @@ public class SpotsNet {
         Route rt = new Route(distance);
 
         spots.addEdge(spot1, spot2, rt);
+    }
+
+    public List<Route> getAllRoutes(){
+        List<Route> routes = new ArrayList<>();
+
+        Collection<Edge<Spot, Route>> edges = spots.edges();
+
+           for (Edge<Spot, Route> edge : edges) {
+                routes.add( edge.getWeight() );
+            }
+        return routes;
     }
 
     public Collection<Spot> getAdjacentSpots(String spotID) {
@@ -57,6 +86,12 @@ public class SpotsNet {
 
     public Boolean connectSpots(String spot1, String spot2){
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void getMinimumSpanTree(){
+
+        Algorithms.getMinimumSpanTreeKruskal(spots, Route::compareTo);
+
     }
 
     @Override
