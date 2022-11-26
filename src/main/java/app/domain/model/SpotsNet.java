@@ -75,17 +75,25 @@ public class SpotsNet {
     }
 
 
-
-    public int keySpot(String spot){
-        throw new UnsupportedOperationException("Not supported yet.");
+    /**
+     * Return the numeric key of a given spot
+     * @param spot
+     * @return
+     */
+    public int keySpots(Spot spot){
+        return spots.key(spot);
     }
 
-    public String spotbyKey(int key){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Spot spotbyKey(int key){
+        return spots.vertex(key);
     }
 
-    public Boolean connectSpots(String spot1, String spot2){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Boolean connectSpots(Spot spot1, Spot spot2){
+        //Quando precisar de verificar quais os vertices acessiveis atraves de um dado aeroporto,
+        //é o algo DFS que deve ser utilizado
+        if (!spots.validVertex(spot1) || !spots.validVertex(spot2)) return false;
+        LinkedList<Spot> spts = Algorithms.DepthFirstSearch(spots, spot1);
+        return spts.contains(spot2);
     }
 
     public void getMinimumSpanTree(){
