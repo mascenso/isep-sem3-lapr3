@@ -422,15 +422,11 @@ public class Algorithms {
 
         lstEdges.sort((e1,e2) -> ce.compare(e1.getWeight(), e2.getWeight()));
 
-        System.out.println("Edges: " + lstEdges);
-
         for (Edge<V,E> e : lstEdges) {
             LinkedList<V> connectedVerts = DepthFirstSearch(mst, e.getVOrig());
             if (!connectedVerts.contains(e.getVDest()))
                 mst.addEdge(e.getVOrig(), e.getVDest(), e.getWeight());
         }
-
-        System.out.println(mst);
         return mst;
     }
 }
