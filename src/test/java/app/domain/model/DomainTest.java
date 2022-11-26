@@ -3,6 +3,7 @@ package app.domain.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,15 +73,18 @@ class DomainTest {
     }
 
     @Test
-    void getAdjacentSpots() {
-        Collection<Spot> a = instance.getAdjacentSpots("CT1");
-        System.out.println(instance.getSpotsNet());
-        System.out.println(a);
+    void testGetAdjacentSpots() {
+        Collection<Spot> spotsObtained = instance.getAdjacentSpots("CT1");
+        Collection<Spot> spotsExpected = new ArrayList<>();
+        spotsExpected.add(new Spot("CT6"));
+
+        assertEquals(spotsObtained, spotsExpected);
     }
 
     @Test
-    void kruskal() {
-            instance.obtainMST();
+    void testMinimumSpanTree() {
+        //todo: calculate MST in Gephi
+        instance.obtainMinimumSpanTree();
     }
 
 }
