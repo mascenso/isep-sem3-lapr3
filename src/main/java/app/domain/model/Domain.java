@@ -77,6 +77,19 @@ public class Domain {
      * For each Empresa, find shortest path to Cliente and Produtores Agricolas
      */
     public void defineNetworkHubs() {
+        //US303 - Definir os hubs da rede de distribuição, ou seja, encontrar as N empresas mais próximas de
+        //todos os pontos da rede (clientes e produtores agrícolas). A medida de proximidade deve ser
+        //calculada como a média do comprimento do caminho mais curto de cada empresa a todos os
+        //clientes e produtores agrícolas. (small, N=3)
+
+        //Para cada empresa:
+        //Calcular o caminho mais curto de uma empresa a todos os clientes. (Dijkstra)
+        //Calcular o caminho mais curto a todos os produtores. (Dijkstra)
+        //Calcular a média entre um e outro.
+
+
+
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

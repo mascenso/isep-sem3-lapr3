@@ -20,7 +20,7 @@ public class MainMenuUI {
     public void run() throws IOException
     {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Do Login", new SelectRoleUI()));
+        options.add(new MenuItem("Select Role", new SelectRoleUI()));
         options.add(new MenuItem("Know the Development Team",new DevTeamUI()));
         int option = 0;
         do
