@@ -102,6 +102,14 @@ public class SpotsNet {
 
     }
 
+    public boolean isConnected() {
+        Spot spot1 = spots.vertex(0);
+        for (Spot s : spots.vertices()) {
+            if (!connectSpots(spot1, s)) return false;
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return spots.toString();
