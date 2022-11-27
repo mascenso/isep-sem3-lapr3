@@ -1,6 +1,6 @@
 package app.domain.model;
 import app.domain.store.UserRoleStore;
-import org.apache.commons.lang3.StringUtils;
+import org.junit.platform.commons.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
