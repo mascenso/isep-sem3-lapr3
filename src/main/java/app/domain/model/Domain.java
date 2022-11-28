@@ -66,10 +66,12 @@ public class Domain {
     }
 
     /**
-     * US302 - Checks if the graph is connected, and if it is, it returns the number of generations
+     * US302 - Checks if the graph is connected, and if it's not,
+     * it returns the minimum number of edges
      */
-    public void checkIfGraphIsConnected() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean checkIfGraphIsConnected() {
+        //Se a busca em largura (DFS) chegar a todos os vértices, é conexo!!
+        return spotsNet.isConnected();
     }
 
     /**
