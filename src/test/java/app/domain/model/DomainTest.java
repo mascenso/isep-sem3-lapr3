@@ -1,5 +1,7 @@
 package app.domain.model;
 
+import app.externalModule.CsvParserEdges;
+import app.externalModule.CsvParserNodes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -89,5 +91,16 @@ class DomainTest {
     @Test
     void checkIfGraphIsConnected() {
         assertEquals(instance.checkIfGraphIsConnected(), false);
+    }
+
+    @Test
+    void ReadNodesAndEdgesPreliminaryTest() {
+        instance.setSpotsNet(new SpotsNet());
+        CsvParserNodes csvParserNodes = new CsvParserNodes();
+        csvParserNodes.getCSVdata("src/main/resources/input_files/ESINF/grafos/Big/clientes-produtores_big.csv", ",", instance);
+        CsvParserEdges csvParserEdges = new CsvParserEdges();
+        csvParserEdges.getCSVdata("src/main/resources/input_files/ESINF/grafos/Big/distancias_big.csv", ",", instance);
+
+        System.out.println(instance.getSpotsNet());
     }
 }

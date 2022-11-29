@@ -20,7 +20,7 @@ public class SpotsNet {
 
         @Override
         public String toString() {
-            return meters + "meters";
+            return meters + "meters\n";
         }
 
         @Override
@@ -32,7 +32,7 @@ public class SpotsNet {
     final private Graph<Spot, Route> spots;
 
     public SpotsNet(){
-        spots = new MapGraph<>(true);
+        spots = new MapGraph<>(false);
     }
 
     public Graph<Spot, Route> getSpots() {
@@ -43,6 +43,10 @@ public class SpotsNet {
         return spots.edge(s1, s2).getWeight();
     }
 
+    public void clearAllNodes(){
+        spots.vertices().clear();
+        spots.edges().clear();
+    }
 
 
 
