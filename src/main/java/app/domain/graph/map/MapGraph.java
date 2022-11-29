@@ -242,7 +242,7 @@ public class MapGraph<V, E> extends CommonGraph<V, E> {
         } else {
             s = "Graph: " + numVerts + " vertices, " + numEdges + " edges\n";
             for (MapVertex<V, E> mv : mapVertices.values())
-                s += mv + "\n";
+                s += mv + "\n\n";
         }
         return s;
     }
