@@ -18,7 +18,6 @@ class DomainTest {
     @BeforeEach
     public void Domain() throws Exception {
 
-        //instance.setSpotsNet(new SpotsNet());
         instance.addSpot("CT1",40.6389,-8.6553,"C1");
         instance.addSpot("CT2",38.0333,-7.8833,"C2");
         instance.addSpot("CT3",41.5333,-8.4167,"C3");
@@ -86,8 +85,9 @@ class DomainTest {
 
         System.out.println(spotsObtained);
         System.out.println(spotsExpected);
-        //TODO: Improve this test
-        assertEquals(spotsObtained.contains(new Spot("CT6")), spotsExpected.contains(new Spot("CT6")));
+        assertTrue(spotsObtained.size() == spotsExpected.size() &&
+                spotsObtained.containsAll(spotsExpected) &&
+                spotsExpected.containsAll(spotsObtained));
     }
 
     @Test
