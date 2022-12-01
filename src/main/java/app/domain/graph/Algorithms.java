@@ -65,7 +65,6 @@ public class Algorithms {
                 DepthFirstSearch(g, vDest, visited, qdfs);
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Performs depth-first search starting in a vertex
@@ -86,7 +85,6 @@ public class Algorithms {
         }
 
         return result;
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Returns all paths from vOrig to vDest
@@ -118,7 +116,6 @@ public class Algorithms {
                 visited[orig] = false;
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Returns all paths from vOrig to vDest
@@ -139,7 +136,6 @@ public class Algorithms {
         }
 
         return result;
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -181,10 +177,9 @@ public class Algorithms {
                 }
             }
 
+            //vOrig = getVertMinDist(dist, visited)
             vOrig = null;
-
             E minDistance = null;
-
             for (V vert : g.vertices()) {
                 int vVertKey = g.key(vert);
                 if (!visited[vVertKey] && dist[vVertKey] != null && (minDistance == null || ce.compare(dist[vVertKey], minDistance) < 0)) {
@@ -193,10 +188,9 @@ public class Algorithms {
                 }
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
-   
+
     /** Shortest-path between two vertices
      *
      * @param g graph
@@ -306,7 +300,6 @@ public class Algorithms {
                 getPath(g, vOrig, pathKeys[destIdx], pathKeys, path);
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Calculates the minimum distance graph using Floyd-Warshall
@@ -397,7 +390,7 @@ public class Algorithms {
                                     ) > 0 )
                             {
                                 minDistGraph.edge(i, j).setWeight(e);
-                        }
+                            }
                         }
                         // if there is an edge from k to j, and the sum is less than the current value
                     }
@@ -407,6 +400,8 @@ public class Algorithms {
         return new MatrixGraph<>(minDistGraph);
 
     }
+
+
 
     public static <V, E> Graph<V,E> getMinimumSpanTreeKruskal(Graph<V,E> g, Comparator<E> ce) {
 
