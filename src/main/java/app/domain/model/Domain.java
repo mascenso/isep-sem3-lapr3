@@ -1,4 +1,5 @@
 package app.domain.model;
+import app.domain.model.SpotsNet.*;
 import app.domain.store.UserRoleStore;
 import org.junit.platform.commons.util.StringUtils;
 
@@ -85,12 +86,8 @@ public class Domain {
         //clientes e produtores agrícolas. (small, N=3)
 
         //Para cada empresa:
-        //Calcular o caminho mais curto de uma empresa a todos os clientes. (Dijkstra)
-        //Calcular o caminho mais curto a todos os produtores. (Dijkstra)
-        //Calcular a média entre um e outro.
-
-
-
+        //Calcular o caminho mais curto de uma empresa a todos os vértices que sejam clientes ou produtores. (Dijkstra)
+        //Calcular a média: distância/nr de caminhos
 
         throw new UnsupportedOperationException("Not supported yet.");
     }

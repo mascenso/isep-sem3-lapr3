@@ -1,33 +1,14 @@
-package app.domain.model;
+package app.domain.model.SpotsNet;
 
 import app.domain.graph.Algorithms;
 import app.domain.graph.Edge;
 import app.domain.graph.Graph;
 import app.domain.graph.map.MapGraph;
+import app.domain.model.Entity;
 
 import java.util.*;
 
 public class SpotsNet {
-
-    private static class Route implements Comparable<Route>{
-
-        public final double meters;
-
-        public Route(double meters) {
-
-            this.meters = meters;
-        }
-
-        @Override
-        public String toString() {
-            return meters + "meters\n";
-        }
-
-        @Override
-        public int compareTo(Route o) {
-            return Double.compare(this.meters, o.meters);
-        }
-    }
 
     final private Graph<Spot, Route> spots;
 
@@ -47,8 +28,6 @@ public class SpotsNet {
         spots.vertices().clear();
         spots.edges().clear();
     }
-
-
 
     public void addSpot(String spotID, double lat, double lng, Entity entity ){
         Spot spot = new Spot(spotID, lat, lng, entity);
