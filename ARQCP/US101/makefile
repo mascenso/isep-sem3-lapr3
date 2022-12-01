@@ -1,8 +1,8 @@
 # A Makefile with variables and suffix rules
 # variaveis
-INCLUDES = 
-SOURCES = demo_pcg.c
-OBJFILES = demo_pcg.o
+INCLUDES = demo_pcg.h
+SOURCES = demo_pcg.s main.c
+OBJFILES = demo_pcg.o main.o
 EXEC = demo_pcg
 # Suffix rules
 .SUFFIXES : .c .o
