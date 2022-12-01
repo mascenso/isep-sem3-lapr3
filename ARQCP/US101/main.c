@@ -1,17 +1,15 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include "demo_pcg.h"
+#include "read_rnd.h"
 
 int state = 0 ;
 int inc = 0;
 
 int main()
-    { 
-        for(int i=0;i<32;i++){
+    {
+    state = read_rnd();
 
-            printf("%8x\n",pcg32_random_r());
-            
-        }
-		    
+    printf("%8lld\n",pcg32_random_r());
         return 0;
     } 
 
