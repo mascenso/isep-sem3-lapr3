@@ -1,4 +1,6 @@
-package app.domain.model;
+package app.domain.model.SpotsNet;
+
+import app.domain.model.Entity;
 
 import java.util.Objects;
 

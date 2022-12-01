@@ -1,5 +1,6 @@
 package app.domain.model;
 
+import app.domain.model.SpotsNet.Spot;
 import app.externalModule.CsvParserEdges;
 import app.externalModule.CsvParserNodes;
 import org.junit.jupiter.api.BeforeEach;
