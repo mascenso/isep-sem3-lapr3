@@ -248,7 +248,7 @@ class MatrixAlgorithmsTest {
         binaryGraph.addEdge("B", "D", 1);
         binaryGraph.addEdge("D", "B", 1);
 
-        Graph<String,Integer> binaryGraphClosed = Algorithms.minDistGraphBinary(binaryGraph, Integer::compare, Integer::sum, 1);
+        Graph<String,Integer> binaryGraphClosed = Algorithms.minDistGraphBinary(binaryGraph, 1);
 
         binaryGraph.addEdge("A", "C", 1);
         binaryGraph.addEdge("A", "D", 1);

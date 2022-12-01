@@ -305,11 +305,9 @@ public class Algorithms {
     /** Calculates the minimum distance graph using Floyd-Warshall
      *
      * @param g   initial graph
-     * @param ce  comparator between elements of type E
-     * @param sum sum two elements of type E
      * @return the minimum distance graph
      */
-    public static <V, E> MatrixGraph<V, E> minDistGraphBinary(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum, E one) {
+    public static <V, E> MatrixGraph<V, E> minDistGraphBinary(Graph<V, E> g, E one) {
 
         int nVerts = g.numVertices();
 
@@ -339,7 +337,7 @@ public class Algorithms {
                     }
             }
         }
-        return (MatrixGraph<V, E>) minDistGraph;
+        return new MatrixGraph<>(minDistGraph);
 
     }
 
@@ -402,7 +400,14 @@ public class Algorithms {
     }
 
 
-
+    /**
+     * Returns the Minimum Span Tree of a given Graph g
+     * @param g initial graph
+     * @param ce
+     * @return
+     * @param <V>
+     * @param <E>
+     */
     public static <V, E> Graph<V,E> getMinimumSpanTreeKruskal(Graph<V,E> g, Comparator<E> ce) {
 
         int nVerts = g.numVertices();
