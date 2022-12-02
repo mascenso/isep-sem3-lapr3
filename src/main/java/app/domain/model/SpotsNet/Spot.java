@@ -1,7 +1,5 @@
 package app.domain.model.SpotsNet;
 
-import app.domain.model.Entity;
-
 import java.util.Objects;
 
 public class Spot {

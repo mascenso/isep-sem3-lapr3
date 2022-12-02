@@ -1,4 +1,4 @@
-package app.domain.model;
+package app.domain.model.SpotsNet;
 
 import java.util.HashMap;
 import java.util.Map;
