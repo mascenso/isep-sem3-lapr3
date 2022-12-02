@@ -231,9 +231,6 @@ public class Algorithms {
 
         return shortPath.isEmpty() ? null : dist[g.key(vDest)];
 
-
-        //throw new UnsupportedOperationException("Not supported yet.");
-
     }
 
     /** Shortest-path between a vertex and all other vertices
@@ -276,8 +273,6 @@ public class Algorithms {
             dists.set(i, dist[i]);
         }
         return true;
-
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -323,15 +318,15 @@ public class Algorithms {
             for (i = 0; i < nVerts; i++) // for each column
             {
                 //if (i != k && T[i,k] = 1)
-                if (i != k && g.edge(g.vertex(i), g.vertex(k)) != null) // if there is an edge from i to k
+                if (i != k && minDistGraph.edge(minDistGraph.vertex(i), minDistGraph.vertex(k)) != null) // if there is an edge from i to k
                     for (j = 0; j < nVerts; j++) {
 
                         //if (i != j && k != j && T[k,j] = 1 )
-                        if (i != j && k != j && g.edge(g.vertex(k), g.vertex(j)) != null // if there is an edge from k to j
+                        if (i != j && k != j && g.edge(minDistGraph.vertex(k), minDistGraph.vertex(j)) != null // if there is an edge from k to j
                         ) {
                             minDistGraph.addEdge(
-                                    g.vertex(i),
-                                    g.vertex(j),
+                                    minDistGraph.vertex(i),
+                                    minDistGraph.vertex(j),
                                     one);
                         }
                     }
@@ -394,9 +389,8 @@ public class Algorithms {
                     }
             }
         }
-
+        System.out.println(new MatrixGraph<>(minDistGraph));
         return new MatrixGraph<>(minDistGraph);
-
     }
 
 
@@ -408,9 +402,9 @@ public class Algorithms {
      * @param <V>
      * @param <E>
      */
-    public static <V, E> Graph<V,E> getMinimumSpanTreeKruskal(Graph<V,E> g, Comparator<E> ce) {
+    public static <V, E> MatrixGraph<V, E> getMinimumSpanTreeKruskal(Graph<V,E> g, Comparator<E> ce) {
 
-        int nVerts = g.numVertices();
+        //int nVerts = g.numVertices();
         Graph<V, E> mst = g.clone();
 
         List<Edge<V,E>> lstEdges = new ArrayList<>(mst.edges());
@@ -427,6 +421,11 @@ public class Algorithms {
             if (!connectedVerts.contains(e.getVDest()))
                 mst.addEdge(e.getVOrig(), e.getVDest(), e.getWeight());
         }
-        return mst;
+        return new MatrixGraph<>(mst);
+    }
+
+    public static <V,E> E calculateTotalWeight(Graph<V, E> g, BinaryOperator<E> sum, E zero) {
+       MatrixGraph<V, E> mg = new MatrixGraph<>(g);
+       return mg.calculateTotalWeight(sum, zero);
     }
 }

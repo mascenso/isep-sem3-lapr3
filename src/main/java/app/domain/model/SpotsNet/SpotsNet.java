@@ -4,7 +4,6 @@ import app.domain.graph.Algorithms;
 import app.domain.graph.Edge;
 import app.domain.graph.Graph;
 import app.domain.graph.map.MapGraph;
-import app.domain.model.Entity;
 
 import java.util.*;
 
@@ -79,10 +78,8 @@ public class SpotsNet {
         return spts.contains(spot2);
     }
 
-    public void getMinimumSpanTree(){
-
-        Algorithms.getMinimumSpanTreeKruskal(spots, Route::compareTo);
-
+    public Graph<Spot, Route> getMinimumSpanTree(){
+        return Algorithms.getMinimumSpanTreeKruskal(spots, Route::compareTo);
     }
 
     public boolean isConnected() {

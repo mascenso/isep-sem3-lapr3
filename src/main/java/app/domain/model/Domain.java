@@ -1,4 +1,5 @@
 package app.domain.model;
+import app.domain.graph.Graph;
 import app.domain.model.SpotsNet.*;
 import app.domain.store.UserRoleStore;
 import org.junit.platform.commons.util.StringUtils;
@@ -102,11 +103,11 @@ public class Domain {
     /**
      * US305 - Obtain MST for all nodes in the graph
      */
-    public void obtainMinimumSpanTree() {
-            spotsNet.getMinimumSpanTree();
+    public Graph<Spot, Route> obtainMinimumSpanTree() {
+        Graph<Spot, Route> mst = spotsNet.getMinimumSpanTree();
+        System.out.println(mst);
+            return mst;
     }
-
-
 
 
 
