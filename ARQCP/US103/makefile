@@ -1,9 +1,9 @@
 # A Makefile with variables and suffix rules
 # variaveis
 INCLUDES = 
-SOURCES = main.c
-OBJFILES = main.o
-EXEC = main
+SOURCES = main_3.c
+OBJFILES = main_3.o
+EXEC = main_3
 # Suffix rules
 .SUFFIXES : .c .o
 # How to build an object .o from a code file .c ; $< -- file name
