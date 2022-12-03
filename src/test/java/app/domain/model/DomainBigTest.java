@@ -30,6 +30,11 @@ class DomainBigTest {
         System.out.println(instance.getSpotsNet());
         System.out.println(instance.getSpotsNet().getSpotsByType());
 
+        System.out.println("Nr of producers in the net:" + instance.getSpotsNet().getSpotsByType().get('P').size());
+        System.out.println("Nr of clients in the net:" + instance.getSpotsNet().getSpotsByType().get('C').size());
+        System.out.println("Nr of empresas in the net:" + instance.getSpotsNet().getSpotsByType().get('E').size());
+
+
     }
 
     @Test
@@ -70,5 +75,25 @@ class DomainBigTest {
     void testDiameter() {
         int diameterGephi = 28;
         assertEquals(diameterGephi, instance.obtainDiameter());
+    }
+
+    @Test
+    void defineNetworkHubs() {
+        instance.defineNetworkHubs(4);
+    }
+
+    @Test
+    void test1shortestPath() {
+        int shortestPathGephi_4_17 = 473192;
+        assertEquals(shortestPathGephi_4_17,
+        instance.getSpotsNet().getShortestPathDistance(new Spot("CT4"), new Spot("CT17")));
+
+    }
+
+    @Test
+    void test2shortestPath() {
+        int shortestPathGephi_159_86 = 73845;
+        assertEquals(shortestPathGephi_159_86,
+                instance.getSpotsNet().getShortestPathDistance(new Spot("CT159"), new Spot("CT86")));
     }
 }

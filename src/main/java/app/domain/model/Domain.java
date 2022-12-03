@@ -2,11 +2,10 @@ package app.domain.model;
 import app.domain.graph.Graph;
 import app.domain.model.SpotsNet.*;
 import app.domain.store.UserRoleStore;
+import com.sun.source.tree.Tree;
 import org.junit.platform.commons.util.StringUtils;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Domain {
 
@@ -80,19 +79,23 @@ public class Domain {
 
     /**
      * US303 - define network Hubs
-     * For each Empresa, find shortest path to Cliente and Produtores Agricolas
+     * Find the most central enterprises in the network, and define them as hubs
+     * Centrality is defined as length of all shortests paths / number of nodes
      */
-    public void defineNetworkHubs() {
-        //US303 - Definir os hubs da rede de distribuição, ou seja, encontrar as N empresas mais próximas de
-        //todos os pontos da rede (clientes e produtores agrícolas). A medida de proximidade deve ser
-        //calculada como a média do comprimento do caminho mais curto de cada empresa a todos os
-        //clientes e produtores agrícolas. (small, N=3)
-
+    public TreeMap<Double, List<Spot>> defineNetworkHubs(int n) {
         //Para cada empresa:
-        //Calcular o caminho mais curto de uma empresa a todos os vértices que sejam clientes ou produtores. (Dijkstra)
+        //Calcular o caminho mais curto de uma empresa a todos os vértices que sejam clientes ou produtores.
+        // (Usou-se o FW)
         //Calcular a média: distância/nr de caminhos
+        this.spotsNet.defineNetworkHubs();
+        TreeMap<Double, List<Spot>> map = this.spotsNet.getHubs();
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        TreeMap<Double, List<Spot>> mapN = map.entrySet().stream()
+                .limit(n)
+                .collect(TreeMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
+
+        System.out.println("Hubs: " + mapN);
+        return mapN;
     }
 
     /**
