@@ -10,6 +10,9 @@ import java.util.*;
 public class SpotsNet {
 
     final private Graph<Spot, Route> spots;
+    private HashMap<Integer, String> clients;
+    private HashMap<Integer, String> empresas;
+    private HashMap<Integer, String> producers;
 
     public SpotsNet(){
         spots = new MapGraph<>(false);
@@ -28,8 +31,9 @@ public class SpotsNet {
         spots.edges().clear();
     }
 
-    public void addSpot(String spotID, double lat, double lng, Entity entity ){
-        Spot spot = new Spot(spotID, lat, lng, entity);
+    public void addSpot(String spotID, double lat, double lng, String spotTypeID){
+
+        Spot spot = new Spot(spotID, lat, lng, spotTypeID);
         spots.addVertex(spot);
     }
 

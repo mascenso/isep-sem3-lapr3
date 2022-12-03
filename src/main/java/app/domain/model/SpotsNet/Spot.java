@@ -9,21 +9,34 @@ public class Spot {
     private double lng;
     private Entity entity;
 
-    public Spot() {
-    }
-
     public Spot(String spotID){
         this.spotID = spotID;
-        this.lat = 0; //TODO
-        this.lng = 0; //TODO
+        this.lat = 0;
+        this.lng = 0;
         this.entity = new Entity();
     }
 
-    public Spot(String spotID, double lat, double lng, Entity entity){
-        this.spotID = spotID;
+    public Spot(String spotID, double lat, double lng, String spotTypeID){
+        Entity entity = new Entity(spotTypeID);
+        this.spotID = validateSpotID(spotID);
         this.lat = lat;
         this.lng = lng;
         this.entity = entity;
+    }
+
+    public String validateSpotID(String spotIDa){
+        if(spotIDa == null || spotIDa.isEmpty()){
+            throw new IllegalArgumentException("SpotID cannot be null or empty.");
+        }
+        if(!spotIDa.startsWith("CT"))
+            throw new IllegalArgumentException("Invalid SpotID");
+
+        try {
+            Integer.parseInt(spotIDa.substring(2));
+        }catch(NumberFormatException e){
+            throw new IllegalArgumentException("Invalid SpotID");
+        }
+        return spotIDa;
     }
 
     public void setSpotID(String spotID) {

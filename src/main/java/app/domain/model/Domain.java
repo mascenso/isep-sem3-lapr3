@@ -5,6 +5,7 @@ import app.domain.store.UserRoleStore;
 import org.junit.platform.commons.util.StringUtils;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public class Domain {
@@ -12,10 +13,11 @@ public class Domain {
     private String designation;
     private UserRoleStore userRoleStore;
 
-    private SpotsNet spotsNet;
     //Main graph:
     //Nodes: clientes-produtores.csv
     //Edges: distancias.csv
+    private SpotsNet spotsNet;
+
 
     public SpotsNet getSpotsNet() {
         return spotsNet;
@@ -48,9 +50,9 @@ public class Domain {
     }
 
     public void addSpot(String spotID, double lat, double lng, String spotTypeID ){
-        Entity entity = new Entity(spotTypeID);
-        this.spotsNet.addSpot(spotID, lat, lng, entity);
+        this.spotsNet.addSpot(spotID, lat, lng, spotTypeID);
     }
+
 
     public Collection<Spot> getAdjacentSpots(String spotID) {
         return spotsNet.getAdjacentSpots(spotID);

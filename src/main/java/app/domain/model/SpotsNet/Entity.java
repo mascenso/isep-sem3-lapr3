@@ -3,12 +3,12 @@ package app.domain.model.SpotsNet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Entity {   // implements client/ Producer/ Wtv
+public class Entity {
 
     private String iD;
-
+    private Character ettyType;
             //Map<Day, Map<ProdID, Qty>, develop classes if necessary.
-            //Develop a class Basket if necessary.
+            //Develop a class Basket if necessary. (Sprint 2)
     private final Map<Integer, Map<Integer, Double>> basket;
 
     public Entity(){
@@ -16,9 +16,30 @@ public class Entity {   // implements client/ Producer/ Wtv
         basket = new HashMap<>();
     }
 
-    public Entity(String ID) {
+    public Entity(String iD) {
+        this.ettyType = validateSpotTypeID(iD);
         this.iD = iD;
         basket = new HashMap<>();
+    }
+
+    public Character validateSpotTypeID(String spotID){
+
+        //remove charAt(0) and check if the rest is a number
+        String spotIDNumber = spotID.substring(1);
+        try{
+            Integer.parseInt(spotIDNumber);
+        }catch(NumberFormatException e){
+            throw new IllegalArgumentException("Invalid SpotID");
+        }catch (NullPointerException e){
+            throw new IllegalArgumentException("SpotID cannot be null");
+        }
+        if(spotID.charAt(0) == 'C' || spotID.charAt(0) == 'E' || spotID.charAt(0) == 'P'){
+            return spotID.charAt(0);
+        }
+        else{
+            throw new IllegalArgumentException("Invalid SpotID");
+        }
+
     }
 
     //Add getters and setters, if necessary
