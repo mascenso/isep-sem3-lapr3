@@ -30,6 +30,11 @@ class DomainBigTest {
         System.out.println(instance.getSpotsNet());
         System.out.println(instance.getSpotsNet().getSpotsByType());
 
+        System.out.println("Nr of producers in the net:" + instance.getSpotsNet().getSpotsByType().get('P').size());
+        System.out.println("Nr of clients in the net:" + instance.getSpotsNet().getSpotsByType().get('C').size());
+        System.out.println("Nr of empresas in the net:" + instance.getSpotsNet().getSpotsByType().get('E').size());
+
+
     }
 
     @Test

@@ -10,13 +10,13 @@ import java.util.*;
 public class SpotsNet {
 
     final private Graph<Spot, Route> spots;
-    private HashMap<Character, List<Spot>> spotsByType;
-    private List<Spot> hubs;
+    private Map<Character, List<Spot>> spotsByType;
+    private Map<Double, List<Spot>> hubs;
 
     public SpotsNet(){
         spots = new MapGraph<>(false);
         spotsByType = new HashMap<>();
-        hubs = new ArrayList<>();
+        hubs = new TreeMap<>();
     }
 
     public Graph<Spot, Route> getSpots() {
@@ -25,11 +25,11 @@ public class SpotsNet {
 
 
     public HashMap<Character, List<Spot>> getSpotsByType() {
-        return spotsByType;
+        return new HashMap<>(spotsByType);
     }
 
-    public List<Spot> getHubs() {
-        return hubs;
+    public HashMap<Double, List<Spot>> getHubs() {
+        return new HashMap<>(hubs);
     }
 
     public void addSpot(String spotID, double lat, double lng, String spotTypeID){
