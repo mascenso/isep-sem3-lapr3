@@ -92,15 +92,17 @@ public class SpotsNet {
 
     public int diameter(){
 
-        Graph<Spot, Route> g = Algorithms.computeDiameterFW(spots, Route::compareTo, Route::sum, new Route(1));
-        int diam = 0;
-        //search for the biggest distance
-        for (Edge<Spot, Route> edge : g.edges()) {
-            if (edge.getWeight().getDistance() > diam)
-                diam = edge.getWeight().getDistance();
+        int diameter = 0;
+        //Uses shortestPathEdges for all vertices
+        for (int i = 0; i < spots.numVertices(); i++) {
+            int max = 0;
+            int maxTemp = Algorithms.shortestPathEdges(spots, spots.vertex(i));
+            if (max < maxTemp)
+                max = maxTemp;
+            if (diameter < max)
+                diameter = max;
         }
-
-        return diam;
+        return diameter;
     }
 
     @Override

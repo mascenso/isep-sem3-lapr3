@@ -1,5 +1,6 @@
 package app.domain.model;
 
+import app.domain.graph.Algorithms;
 import app.domain.graph.Graph;
 import app.domain.graph.matrix.MatrixGraph;
 import app.domain.model.SpotsNet.Route;
@@ -64,6 +65,12 @@ class DomainBigTest {
 
     @Test
     void testDiameter() {
+        int diameterGephi = 28;
+        assertEquals(diameterGephi, instance.obtainDiameter());
+    }
+
+    @Test
+    void testDiameter2() {
         int diameterGephi = 28;
         assertEquals(diameterGephi, instance.obtainDiameter());
     }
