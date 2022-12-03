@@ -395,34 +395,55 @@ public class Algorithms {
         return new MatrixGraph<>(minDistGraph);
     }
 
-    /**
-     * Calculates the diameter using Floyd-Warshall
-     *
-     * @param g   initial graph
-     * @return the minimum distance graph
-     */
-    public static <V, E> MatrixGraph<V, E> computeDiameterFW(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum, E one){
+    public static <V, E> int shortestPathEdges(Graph<V,E> g, V vOrig) {
 
-            int nVerts = g.numVertices();
+        int eccentricity[] = new int[g.numVertices()];
+        int dist[] = new int[g.numVertices()];
+        int path[] = new int[g.numVertices()];
 
-            // Initialize the solution matrix = input graph matrix.//*--*--*--*--*--*--*--*--*--*
-            Graph<V, E> minDistGraph = g.clone();
-            //--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+        int max = 0;
 
-            //Set all non null edges to 1
-            for (int i = 0; i < nVerts; i++) // for each line
-            {
-                for (int j = 0; j < nVerts; j++) // for each column
-                {
-                    if (minDistGraph.edge(i, j) != null)
-                    {
-                        minDistGraph.edge(i, j).setWeight(one);
-                    }
+        for (int i = 0; i < g.numVertices(); i++) {
+            dist[i] = Integer.MAX_VALUE;
+            path[i] = -1;
+        }
+
+
+        //add vOrig to the queue
+        dist[g.key(vOrig)] = 0;
+
+        //create a queue
+        Queue<V> q = new LinkedList<>();
+        int eccen = 0;
+
+        q.add(vOrig);
+
+        while (!q.isEmpty()) {
+            V v = q.remove();
+            for (Edge<V, E> e : g.outgoingEdges(v)) {
+                int w = g.key(e.getVDest());
+                if (dist[w] == Integer.MAX_VALUE) {
+                    dist[w] = dist[g.key(v)] + 1;
+                    path[w] = g.key(v);
+                    q.add(e.getVDest());
+
+                        if (eccen < dist[w])
+                        eccen = dist[w];
+
+                        if (max < dist[w])
+                        max = dist[w];
                 }
             }
-
-            return minDistGraph(minDistGraph, ce, sum);
         }
+
+        System.out.println("Eccentricity of " + vOrig + " is " + eccen);
+        for (int i = 0; i < g.numVertices(); i++) {
+            System.out.println("Shortest path from " + vOrig + " to " + g.vertex(i) + " is " + dist[i]);
+        }
+
+        return max;
+    }
+
 
 
 

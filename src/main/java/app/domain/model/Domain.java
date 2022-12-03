@@ -111,6 +111,6 @@ public class Domain {
 
 
     public int obtainDiameter() {
-        return (int) spotsNet.diameter();
+        return spotsNet.diameter();
     }
 }
