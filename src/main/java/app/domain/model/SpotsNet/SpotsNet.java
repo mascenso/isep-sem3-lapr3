@@ -95,10 +95,7 @@ public class SpotsNet {
         int diameter = 0;
         //Uses shortestPathEdges for all vertices
         for (int i = 0; i < spots.numVertices(); i++) {
-            int max = 0;
-            int maxTemp = Algorithms.shortestPathEdges(spots, spots.vertex(i));
-            if (max < maxTemp)
-                max = maxTemp;
+            int max = Algorithms.shortestPathEdges(spots, spots.vertex(i));
             if (diameter < max)
                 diameter = max;
         }
