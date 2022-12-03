@@ -28,6 +28,8 @@ class DomainBigTest {
         System.out.println(csvParserEdges.getCSVdata("src/main/resources/input_files/ESINF/grafos/Big/distancias_big.csv", ",", instance));
 
         System.out.println(instance.getSpotsNet());
+        System.out.println(instance.getSpotsNet().getSpotsByType());
+
     }
 
     @Test

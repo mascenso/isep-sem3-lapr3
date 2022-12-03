@@ -39,7 +39,10 @@ public class Entity {
         else{
             throw new IllegalArgumentException("Invalid SpotID");
         }
+    }
 
+    public String getType(){
+        return ettyType.toString();
     }
 
     //Add getters and setters, if necessary
