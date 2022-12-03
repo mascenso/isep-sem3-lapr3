@@ -76,4 +76,24 @@ class DomainBigTest {
         int diameterGephi = 28;
         assertEquals(diameterGephi, instance.obtainDiameter());
     }
+
+    @Test
+    void defineNetworkHubs() {
+        instance.defineNetworkHubs(4);
+    }
+
+    @Test
+    void test1shortestPath() {
+        int shortestPathGephi_4_17 = 473192;
+        assertEquals(shortestPathGephi_4_17,
+        instance.getSpotsNet().getShortestPathDistance(new Spot("CT4"), new Spot("CT17")));
+
+    }
+
+    @Test
+    void test2shortestPath() {
+        int shortestPathGephi_159_86 = 73845;
+        assertEquals(shortestPathGephi_159_86,
+                instance.getSpotsNet().getShortestPathDistance(new Spot("CT159"), new Spot("CT86")));
+    }
 }
