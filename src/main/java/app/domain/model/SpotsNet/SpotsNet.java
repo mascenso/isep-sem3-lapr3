@@ -10,34 +10,49 @@ import java.util.*;
 public class SpotsNet {
 
     final private Graph<Spot, Route> spots;
-    private HashMap<Integer, String> clients;
-    private HashMap<Integer, String> empresas;
-    private HashMap<Integer, String> producers;
+    private HashMap<Character, List<Spot>> spotsByType;
+    private List<Spot> hubs;
 
     public SpotsNet(){
         spots = new MapGraph<>(false);
+        spotsByType = new HashMap<>();
+        hubs = new ArrayList<>();
     }
 
     public Graph<Spot, Route> getSpots() {
         return spots;
     }
 
-    public Route getRoute(Spot s1, Spot s2){
-        return spots.edge(s1, s2).getWeight();
+
+    public HashMap<Character, List<Spot>> getSpotsByType() {
+        return spotsByType;
     }
 
-    public void clearAllNodes(){
-        spots.vertices().clear();
-        spots.edges().clear();
+    public List<Spot> getHubs() {
+        return hubs;
     }
 
     public void addSpot(String spotID, double lat, double lng, String spotTypeID){
+        try {
 
-        Spot spot = new Spot(spotID, lat, lng, spotTypeID);
-        spots.addVertex(spot);
+            Character keyType = validateSpotTypeID(spotTypeID);
+            Spot spot = new Spot(spotID, lat, lng, spotTypeID);
+            spots.addVertex(spot);
+            if (spotsByType.containsKey(keyType)) {
+                spotsByType.get(keyType).add(spot);
+            } else {
+                List<Spot> spotsList = new ArrayList<>();
+                spotsList.add(spot);
+                spotsByType.put(keyType, spotsList);
+            }
+
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void addRoute(String spotID1, String spotID2, int distance){
+        //change this to find the spots on the maps
         Spot spot1 = new Spot(spotID1);
         Spot spot2 = new Spot(spotID2);
         Route rt = new Route(distance);
@@ -54,6 +69,25 @@ public class SpotsNet {
                 routes.add( edge.getWeight() );
             }
         return routes;
+    }
+
+    public Character validateSpotTypeID(String spotID){
+
+        //remove charAt(0) and check if the rest is a number
+        String spotIDNumber = spotID.substring(1);
+        try{
+            Integer.parseInt(spotIDNumber);
+        }catch(NumberFormatException e){
+            throw new IllegalArgumentException("Invalid SpotID");
+        }catch (NullPointerException e){
+            throw new IllegalArgumentException("SpotID cannot be null");
+        }
+        if(spotID.charAt(0) == 'C' || spotID.charAt(0) == 'E' || spotID.charAt(0) == 'P'){
+            return spotID.charAt(0);
+        }
+        else{
+            throw new IllegalArgumentException("Invalid SpotID");
+        }
     }
 
     public Collection<Spot> getAdjacentSpots(String spotID) {
