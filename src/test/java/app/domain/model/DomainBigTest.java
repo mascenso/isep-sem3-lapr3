@@ -23,9 +23,10 @@ class DomainBigTest {
     @BeforeEach
     public void Domain() throws Exception {
         CsvParserNodes csvParserNodes = new CsvParserNodes();
-        csvParserNodes.getCSVdata("src/main/resources/input_files/ESINF/grafos/Big/clientes-produtores_big.csv", ",", instance);
+        System.out.println(csvParserNodes.getCSVdata("src/main/resources/input_files/ESINF/grafos/Big/clientes-produtores_big.csv", ",", instance));
         CsvParserEdges csvParserEdges = new CsvParserEdges();
-        csvParserEdges.getCSVdata("src/main/resources/input_files/ESINF/grafos/Big/distancias_big.csv", ",", instance);
+        System.out.println(csvParserEdges.getCSVdata("src/main/resources/input_files/ESINF/grafos/Big/distancias_big.csv", ",", instance));
+
         System.out.println(instance.getSpotsNet());
     }
 
@@ -65,12 +66,6 @@ class DomainBigTest {
 
     @Test
     void testDiameter() {
-        int diameterGephi = 28;
-        assertEquals(diameterGephi, instance.obtainDiameter());
-    }
-
-    @Test
-    void testDiameter2() {
         int diameterGephi = 28;
         assertEquals(diameterGephi, instance.obtainDiameter());
     }

@@ -414,7 +414,7 @@ public class Algorithms {
 
         //create a queue
         Queue<V> q = new LinkedList<>();
-        int eccen = 0;
+        int ecty = 0;
 
         q.add(vOrig);
 
@@ -427,20 +427,20 @@ public class Algorithms {
                     path[w] = g.key(v);
                     q.add(e.getVDest());
 
-                        if (eccen < dist[w])
-                        eccen = dist[w];
+                        if (ecty< dist[w])
+                            ecty = dist[w];
 
                         if (max < dist[w])
                         max = dist[w];
                 }
             }
         }
-
-        System.out.println("Eccentricity of " + vOrig + " is " + eccen);
+/*
+        System.out.println("Eccentricity of " + vOrig + ": " + eccentricity);
         for (int i = 0; i < g.numVertices(); i++) {
             System.out.println("Shortest path from " + vOrig + " to " + g.vertex(i) + " is " + dist[i]);
         }
-
+ */
         return max;
     }
 
