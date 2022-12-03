@@ -33,7 +33,7 @@ public class SpotsNet {
         spots.addVertex(spot);
     }
 
-    public void addRoute(String spotID1, String spotID2, double distance){
+    public void addRoute(String spotID1, String spotID2, int distance){
         Spot spot1 = new Spot(spotID1);
         Spot spot2 = new Spot(spotID2);
         Route rt = new Route(distance);
@@ -88,6 +88,19 @@ public class SpotsNet {
             if (!connectSpots(spot1, s)) return false;
         }
         return true;
+    }
+
+    public int diameter(){
+
+        Graph<Spot, Route> g = Algorithms.computeDiameterFW(spots, Route::compareTo, Route::sum, new Route(1));
+        int diam = 0;
+        //search for the biggest distance
+        for (Edge<Spot, Route> edge : g.edges()) {
+            if (edge.getWeight().getDistance() > diam)
+                diam = edge.getWeight().getDistance();
+        }
+
+        return diam;
     }
 
     @Override

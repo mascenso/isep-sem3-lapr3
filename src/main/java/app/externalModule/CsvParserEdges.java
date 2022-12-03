@@ -62,7 +62,7 @@ public class CsvParserEdges {
                             loadedData = loadedData + 1;
 
                             //add data to the domain Loc id 1,Loc id 2, length (m)
-                            qcl.addRoute(data[0], data[1], Double.parseDouble(data[2]));
+                            qcl.addRoute(data[0], data[1], Integer.parseInt(data[2]));
 
                         }
                     }

@@ -2,14 +2,14 @@ package app.domain.model.SpotsNet;
 
 public class Route implements Comparable<Route>{
 
-    public final double meters;
+    public final int meters;
 
-    public Route(double meters) {
+    public Route(int meters) {
 
         this.meters = meters;
     }
 
-    public double getDistance() {
+    public int getDistance() {
         return meters;
     }
 

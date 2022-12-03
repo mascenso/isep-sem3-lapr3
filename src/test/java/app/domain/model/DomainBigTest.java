@@ -61,4 +61,10 @@ class DomainBigTest {
     void checkIfGraphIsConnected() {
         assertTrue(instance.checkIfGraphIsConnected());
     }
+
+    @Test
+    void testDiameter() {
+        int diameterGephi = 28;
+        assertEquals(diameterGephi, instance.obtainDiameter());
+    }
 }
