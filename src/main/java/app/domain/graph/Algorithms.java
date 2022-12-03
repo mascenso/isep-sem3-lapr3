@@ -1,5 +1,6 @@
 package app.domain.graph;
 
+import app.domain.graph.map.MapGraph;
 import app.domain.graph.matrix.MatrixGraph;
 
 import java.util.*;
@@ -247,6 +248,7 @@ public class Algorithms {
     public static <V, E> boolean shortestPaths(Graph<V, E> g, V vOrig,
                                                Comparator<E> ce, BinaryOperator<E> sum, E zero,
                                                ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
+
         if (!g.validVertex(vOrig))
             return false;
 
@@ -392,6 +394,36 @@ public class Algorithms {
         System.out.println(new MatrixGraph<>(minDistGraph));
         return new MatrixGraph<>(minDistGraph);
     }
+
+    /**
+     * Calculates the diameter using Floyd-Warshall
+     *
+     * @param g   initial graph
+     * @return the minimum distance graph
+     */
+    public static <V, E> MatrixGraph<V, E> computeDiameterFW(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum, E one){
+
+            int nVerts = g.numVertices();
+
+            // Initialize the solution matrix = input graph matrix.//*--*--*--*--*--*--*--*--*--*
+            Graph<V, E> minDistGraph = g.clone();
+            //--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
+
+            //Set all non null edges to 1
+            for (int i = 0; i < nVerts; i++) // for each line
+            {
+                for (int j = 0; j < nVerts; j++) // for each column
+                {
+                    if (minDistGraph.edge(i, j) != null)
+                    {
+                        minDistGraph.edge(i, j).setWeight(one);
+                    }
+                }
+            }
+
+            return minDistGraph(minDistGraph, ce, sum);
+        }
+
 
 
     /**

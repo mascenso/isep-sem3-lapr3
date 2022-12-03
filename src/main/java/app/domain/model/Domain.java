@@ -56,7 +56,7 @@ public class Domain {
         return spotsNet.getAdjacentSpots(spotID);
     }
 
-    public void addRoute(String spotID1, String spotID2, double meters){
+    public void addRoute(String spotID1, String spotID2, int meters){
         this.spotsNet.addRoute(spotID1, spotID2, meters);
     }
 
@@ -110,5 +110,7 @@ public class Domain {
     }
 
 
-
+    public int obtainDiameter() {
+        return (int) spotsNet.diameter();
+    }
 }
