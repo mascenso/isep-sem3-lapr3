@@ -1,7 +1,7 @@
 package app.domain.model;
 import app.domain.utils.Configurations;
 import app.domain.utils.CsvParser;
-import app.domain.utils.graph.Graph;
+import app.domain.utils.RankableMap;
 import app.domain.model.SpotsNet.*;
 import app.domain.store.UserRoleStore;
 import app.domain.utils.graph.matrix.MatrixGraph;
@@ -9,9 +9,6 @@ import app.interfaces.CONSTANT;
 import org.junit.platform.commons.util.StringUtils;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class Domain {
 
@@ -76,20 +73,16 @@ public class Domain {
      * Find the most central enterprises in the network, and define them as hubs
      * Centrality is defined as length of all shortests paths / number of nodes
      */
-    public TreeMap<Double, List<Spot>> defineNetworkHubs(int n) {
+    public RankableMap<Spot, Double> defineNetworkHubs(int n) {
         //Para cada empresa:
         //Calcular o caminho mais curto de uma empresa a todos os vértices que sejam clientes ou produtores.
         // (Usou-se o FW)
         //Calcular a média: distância/nr de caminhos
         this.spotsNet.defineNetworkHubs();
-        TreeMap<Double, List<Spot>> map = this.spotsNet.getHubs();
+        RankableMap<Spot, Double> map = this.spotsNet.getHubs();
 
-        TreeMap<Double, List<Spot>> mapN = map.entrySet().stream()
-                .limit(n)
-                .collect(TreeMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
+        return map.getTopN(n);
 
-        System.out.println("Hubs: " + mapN);
-        return mapN;
     }
 
     /**

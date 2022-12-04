@@ -7,7 +7,6 @@ import app.domain.model.Route;
 import app.domain.model.Spot;
 import app.interfaces.CONSTANT;
 
-import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;

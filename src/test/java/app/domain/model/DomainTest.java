@@ -1,14 +1,14 @@
 package app.domain.model;
 
 
+import app.domain.utils.RankableMap;
 import app.domain.utils.graph.Graph;
 import app.domain.utils.graph.matrix.MatrixGraph;
 import com.sun.source.tree.NewArrayTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,7 +49,33 @@ class DomainTest {
 
     @Test
     void defineNetworkHubs() {
-        instance.defineNetworkHubs(4);
+
+        RankableMap<Spot, Double> hubsTop4 = instance.defineNetworkHubs(4);
+
+        RankableMap<Spot, Double> hubsExpected = new RankableMap<>();
+
+        Double value1 = 169295.25;
+        Double value2 = 170292.30;
+        Double value3 = 170317.06;
+        Double value4 = 170557.35;
+
+        Spot spot1 = new Spot ("CT146",40.1125,-8.2469,new Entity("E49"));
+        Spot spot2 = new Spot ("CT142",40.2594,-8.3168,new Entity("E71"));
+        Spot spot3 = new Spot ("CT33",39.9167,-8.4333,new Entity("E86"));
+        Spot spot4 = new Spot ("CT209",40.2667,-8.2667,new Entity("E40"));
+
+        hubsExpected.put(spot1, value1);
+        hubsExpected.put(spot2, value2);
+        hubsExpected.put(spot3, value3);
+        hubsExpected.put(spot4, value4);
+
+        assertEquals(hubsExpected.get(spot1), hubsTop4.get(spot1), 0.1);
+        assertEquals(hubsExpected.get(spot2), hubsTop4.get(spot2), 0.1);
+        assertEquals(hubsExpected.get(spot3), hubsTop4.get(spot3), 0.1);
+        assertEquals(hubsExpected.get(spot4), hubsTop4.get(spot4), 0.1);
+
+        assertEquals(hubsExpected.size(), hubsTop4.size());
+
     }
 
     @Test

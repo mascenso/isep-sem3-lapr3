@@ -2,8 +2,8 @@ package app.domain.model.SpotsNet;
 
 import app.domain.model.Route;
 import app.domain.model.Spot;
+import app.domain.utils.RankableMap;
 import app.domain.utils.graph.Algorithms;
-import app.domain.utils.graph.Edge;
 import app.domain.utils.graph.Graph;
 import app.domain.utils.graph.map.MapGraph;
 import app.domain.utils.graph.matrix.MatrixGraph;
@@ -15,13 +15,17 @@ public class SpotsNet {
     final private Graph<Spot, Route> spots;
     private HashMap<Character, List<Spot>> spotsByType;
     private HashMap<String,Spot> spotStore;
-    private TreeMap<Double, List<Spot>> hubs; //todo:ver se é possível usar arraylist
+    private RankableMap<Spot, Double> hubs;
+
+    public RankableMap<Spot, Double> getHubs() {
+        return hubs;
+    }
 
     public SpotsNet(){
         spots = new MapGraph<>(false);
         spotsByType = new HashMap<>();
         spotStore =new HashMap<>();
-        hubs = new TreeMap<>();
+        hubs = new RankableMap<>();
     }
 
     public Graph<Spot, Route> getSpots() {
@@ -30,10 +34,6 @@ public class SpotsNet {
 
     public HashMap<Character, List<Spot>> getSpotsByType() {
         return spotsByType;
-    }
-
-    public TreeMap<Double, List<Spot>> getHubs() {
-        return hubs;
     }
 
     public HashMap<String, Spot> getSpotStore() {
@@ -61,23 +61,8 @@ public class SpotsNet {
         }
     }
 
-
     public void addRoute(Route route, Spot initial, Spot end){
         spots.addEdge(initial, end, route);
-    }
-
-
-
-    //todo:rever
-    public List<Route> getAllRoutes(){
-        List<Route> routes = new ArrayList<>();
-
-        Collection<Edge<Spot, Route>> edges = spots.edges();
-
-           for (Edge<Spot, Route> edge : edges) {
-                routes.add( edge.getWeight() );
-            }
-        return routes;
     }
 
     /**
@@ -146,16 +131,8 @@ public class SpotsNet {
 
             Double media = (double) sum / nrOfClientsAndProducers;
 
-            if (hubs.containsKey(media)) {
-                hubs.get(media).add(spotiEmpresa);
-            } else {
-                List<Spot> spotsList = new ArrayList<>();
-                spotsList.add(spotiEmpresa);
-                hubs.put(media, spotsList);
-            }
-
+            hubs.put(spotiEmpresa, media);
         }
-
     }
 
     public int getShortestPathDistance(Spot spot1, Spot spot2) {
