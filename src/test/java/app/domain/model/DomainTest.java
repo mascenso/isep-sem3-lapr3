@@ -24,9 +24,9 @@ class DomainTest {
 
         System.out.println(instance.getSpotsNet());
         System.out.println(instance.getSpotsNet().getSpotsByType());
-        System.out.println("Nr of producers in the net:" + instance.getSpotsNet().getSpotsByType().get('P').size());
-        System.out.println("Nr of clients in the net:" + instance.getSpotsNet().getSpotsByType().get('C').size());
-        System.out.println("Nr of empresas in the net:" + instance.getSpotsNet().getSpotsByType().get('E').size());
+        System.out.println("Nr of producers in the net:" + instance.getSpotsNet().getSpotsByType().get(EntityType.PRODUCER).size());
+        System.out.println("Nr of clients in the net:" + instance.getSpotsNet().getSpotsByType().get(EntityType.CLIENT).size());
+        System.out.println("Nr of empresas in the net:" + instance.getSpotsNet().getSpotsByType().get(EntityType.EMPRESA).size());
     }
 
     @Test

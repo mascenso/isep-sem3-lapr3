@@ -76,7 +76,7 @@ public class Entity implements Comparable<Entity> {
             return false;
         }
         Entity otherObj = (Entity)obj;
-        return this.iD.equals(otherObj.getiD()) && this.ettyType.equals(otherObj.getEttyType()) &&this.basket.equals(otherObj.getBasket());
+        return this.iD.equals(otherObj.getiD());
     }
 
 

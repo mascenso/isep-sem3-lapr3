@@ -115,17 +115,17 @@ public class SpotsNet {
         //Calcular o caminho mais curto de uma empresa a todos os vértices que sejam clientes ou produtores. (Dijkstra)
 
         Graph<Spot, Route> minDistGraph = Algorithms.minDistGraph(spots, Route::compareTo, Route::sum);
-        int nrOfClientsAndProducers = this.getSpotsByType().get('C').size() + this.getSpotsByType().get('P').size();
+        int nrOfClientsAndProducers = this.getSpotsByType().get(EntityType.CLIENT).size() + this.getSpotsByType().get(EntityType.PRODUCER).size();
 
-        for (Spot spotiEmpresa : this.getSpotsByType().get('E')) {
+        for (Spot spotiEmpresa : this.getSpotsByType().get(EntityType.EMPRESA)) {
 
             int sum = 0;
 
-            for (Spot spotC : this.getSpotsByType().get('C')) {
+            for (Spot spotC : this.getSpotsByType().get(EntityType.CLIENT)) {
                 int distEC = minDistGraph.edge(spotiEmpresa, spotC).getWeight().getDistance();
                 sum = sum + distEC;
             }
-            for (Spot spotP : this.getSpotsByType().get('P')) {
+            for (Spot spotP : this.getSpotsByType().get(EntityType.PRODUCER)) {
                 int distEP = minDistGraph.edge(spotiEmpresa, spotP).getWeight().getDistance();
                 sum = sum + distEP;
             }
