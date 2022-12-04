@@ -1,10 +1,17 @@
 package app.domain.model;
+import app.domain.utils.Configurations;
+import app.domain.utils.CsvParser;
 import app.domain.utils.graph.Graph;
 import app.domain.model.SpotsNet.*;
 import app.domain.store.UserRoleStore;
+import app.domain.utils.graph.matrix.MatrixGraph;
+import app.interfaces.CONSTANT;
 import org.junit.platform.commons.util.StringUtils;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Domain {
 
@@ -47,8 +54,12 @@ public class Domain {
     /**
      * US301 - Constructs a graph based on information from read files data
      */
-    public void constructMainGraph() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void constructMainGraph() throws IOException {
+        CsvParser inputDataGraph = new CsvParser();
+        inputDataGraph.getCSVdata(Configurations.getFile(CONSTANT.FILE_CLIENTES_PRODUTORES),
+                                  Configurations.getDelimiter(CONSTANT.DELIMITERC),this);
+        inputDataGraph.getCSVdata(Configurations.getFile(CONSTANT.FILE_DISTANCES),
+                                  Configurations.getDelimiter(CONSTANT.DELIMITERC),this);
     }
 
     /**
@@ -91,8 +102,8 @@ public class Domain {
     /**
      * US305 - Obtain MST for all nodes in the graph
      */
-    public Graph<Spot, Route> obtainMinimumSpanTree() {
-        Graph<Spot, Route> mst = spotsNet.getMinimumSpanTree();
+    public MatrixGraph<Spot, Route> obtainMinimumSpanTree() {
+        MatrixGraph<Spot, Route> mst = spotsNet.getMinimumSpanTree();
         System.out.println(mst);
             return mst;
     }
