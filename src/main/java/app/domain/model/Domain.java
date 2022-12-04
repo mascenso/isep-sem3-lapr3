@@ -89,6 +89,9 @@ public class Domain {
      * US304 - For each Client (Particular ou Empresa), find nearest HUB.
      */
     public void findNearestHub() {
+
+
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

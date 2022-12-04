@@ -135,6 +135,14 @@ public class SpotsNet {
         }
     }
 
+    /**
+     * US304 - Para cada cliente (particular ou empresa) determinar o hub mais próximo.
+     */
+    public void findNearestHubs(){
+
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public int getShortestPathDistance(Spot spot1, Spot spot2) {
         return Algorithms.minDistGraph(spots, Route::compareTo, Route::sum).edge(spot1, spot2).getWeight().getDistance();
     }
