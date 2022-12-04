@@ -1,6 +1,6 @@
-package app.domain.graph.map;
+package app.domain.utils.graph.map;
 
-import app.domain.graph.Edge;
+import app.domain.utils.graph.Edge;
 
 import java.util.ArrayList;
 import java.util.Collection;

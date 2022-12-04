@@ -1,23 +1,21 @@
-package app.domain.graph.matrix;
-
-import app.domain.graph.Algorithms;
-import app.domain.graph.Graph;
-
-
+package app.domain.utils.graph.map;
+import app.domain.utils.graph.Algorithms;
+import app.domain.utils.graph.Graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MatrixAlgorithmsTest {
+class MapAlgorithmsTest {
 
-    final Graph<String,Integer> completeMap = new MatrixGraph<>(false);
-    Graph<String,Integer> incompleteMap = new MatrixGraph<>(false);
+    final Graph<String, Integer> completeMap = new MapGraph<>(false);
+    Graph<String, Integer> incompleteMap = new MapGraph<>(false);
 
-    public MatrixAlgorithmsTest() {
+    public MapAlgorithmsTest() {
     }
 
     @BeforeEach
@@ -47,7 +45,6 @@ class MatrixAlgorithmsTest {
         completeMap.addEdge("Aveiro", "Leiria", 120);
         completeMap.addEdge("Leiria", "Lisboa", 150);
 
-        //imcomplete Map isn't conexo
         incompleteMap = completeMap.clone();
 
         completeMap.addEdge("Aveiro", "Viseu", 85);
@@ -206,59 +203,37 @@ class MatrixAlgorithmsTest {
      */
     @Test
     public void testminDistGraph() {
-
         System.out.println("Test of minimum distance graph");
 
         Graph<String, Integer> gExpected = completeMap.clone();
         Graph<String, Integer> gObtained = Algorithms.minDistGraph(completeMap, Integer::compare, Integer::sum);
 
-        gExpected.addEdge("Porto", "Lisboa", 335);
         gExpected.addEdge("Porto", "Coimbra", 135);
-        gExpected.addEdge("Porto", "Faro", 615);
-        gExpected.addEdge("Porto", "Viseu", 160);
-        gExpected.addEdge("Porto", "Guarda", 235);
-        gExpected.addEdge("Porto", "Castelo Branco", 335);
         gExpected.addEdge("Porto", "Leiria", 195);
+        gExpected.addEdge("Porto", "Viseu", 160);
+        gExpected.addEdge("Porto", "Lisboa", 335);
+        gExpected.addEdge("Porto", "Castelo Branco", 335);
+        gExpected.addEdge("Porto", "Guarda", 235);
+        gExpected.addEdge("Porto", "Faro", 615);
+
         Collection<String> a = gExpected.adjVertices("Porto");
 
-        Collection<String> b = gObtained.adjVertices("Porto");
+        for (String v : a) {
+            assertEquals(gExpected.edge("Porto", v).getWeight(),
+                         gObtained.edge("Porto", v).getWeight(), "Edge weight should be the same");
+        }
 
-        assertEquals(a, b);
-    }
+        int totalDegreesExpected = 110;
+        //count total degrees
+        int totalDegreesObtained = 0;
+        for (String v : gObtained.vertices()) {
+            totalDegreesObtained += gObtained.outDegree(v);
+        }
 
-    /**
-     * Test minimum distance graph using Floyd-Warshall on a binary Matrix.
-     */
-    @Test
-    public void testminDistGraphBinary() {
+        assertEquals(110, totalDegreesObtained, "Total degrees should be the same");
 
-        Graph<String,Integer> binaryGraph = new MatrixGraph<>(false);
 
-        binaryGraph.adjVertices("A");
-        binaryGraph.adjVertices("B");
-        binaryGraph.adjVertices("C");
-        binaryGraph.adjVertices("D");
-
-        binaryGraph.addEdge("A", "B", 1);
-        binaryGraph.addEdge("B", "A", 1);
-
-        binaryGraph.addEdge("B", "C", 1);
-        binaryGraph.addEdge("C", "B", 1);
-
-        binaryGraph.addEdge("B", "D", 1);
-        binaryGraph.addEdge("D", "B", 1);
-
-        Graph<String,Integer> binaryGraphClosed = Algorithms.minDistGraphBinary(binaryGraph, 1);
-
-        binaryGraph.addEdge("A", "C", 1);
-        binaryGraph.addEdge("A", "D", 1);
-        binaryGraph.addEdge("C", "D", 1);
-
-        assertEquals(binaryGraph, binaryGraphClosed);
 
 
     }
-    
-    
-    
 }

@@ -1,4 +1,4 @@
-package app.domain.graph;
+package app.domain.utils.graph;
 
 import java.util.Objects;
 

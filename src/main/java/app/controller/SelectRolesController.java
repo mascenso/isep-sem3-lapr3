@@ -12,6 +12,6 @@ public class SelectRolesController {
 
 
     public List<UserRole> getUserRoles() {
-        return app.getCompany().getUserRoles();
+        return app.getCompany().getUserRoleStore().getUserRoles();
     }
 }

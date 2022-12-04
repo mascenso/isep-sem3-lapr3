@@ -1,10 +1,9 @@
-package app.domain.graph.map;
+package app.domain.utils.graph.map;
 
-import app.domain.graph.Edge;
-import app.domain.graph.Graph;
+import app.domain.utils.graph.Edge;
+import app.domain.utils.graph.Graph;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package app.domain.model.SpotsNet;
+package app.domain.model;
 
 public class Route implements Comparable<Route>{
 

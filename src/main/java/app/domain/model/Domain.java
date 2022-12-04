@@ -1,65 +1,48 @@
 package app.domain.model;
-import app.domain.graph.Graph;
+import app.domain.utils.graph.Graph;
 import app.domain.model.SpotsNet.*;
 import app.domain.store.UserRoleStore;
-import com.sun.source.tree.Tree;
 import org.junit.platform.commons.util.StringUtils;
 
-import java.util.*;
+import java.util.List;
 
 public class Domain {
 
+    //todo:talvez não seja necessário
     private String designation;
+
     private UserRoleStore userRoleStore;
 
-    //Main graph:
-    //Nodes: clientes-produtores.csv
-    //Edges: distancias.csv
     private SpotsNet spotsNet;
 
-
-    public SpotsNet getSpotsNet() {
-        return spotsNet;
-    }
-
-    public void setSpotsNet(SpotsNet spotsNet) {
-        this.spotsNet = spotsNet;
-    }
 
     public Domain(String designation)
     {
         if (StringUtils.isBlank(designation))
             throw new IllegalArgumentException("Designation cannot be blank.");
 
-        this.designation = designation;
+        setDesignation(designation);
         this.userRoleStore = new UserRoleStore();
-        setSpotsNet(new SpotsNet());
-        //Default roles added in App/Bootstrap()
+
+        this.spotsNet= new SpotsNet();
     }
 
     public String getDesignation() {
         return designation;
     }
 
-    public List<UserRole> getUserRoles() {
-        return userRoleStore.getUserRoles();
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
+
+    public SpotsNet getSpotsNet() {
+        return spotsNet;
+    }
+
     public UserRoleStore getUserRoleStore() {
         return this.userRoleStore;
     }
 
-    public void addSpot(String spotID, double lat, double lng, String spotTypeID ){
-        this.spotsNet.addSpot(spotID, lat, lng, spotTypeID);
-    }
-
-
-    public Collection<Spot> getAdjacentSpots(String spotID) {
-        return spotsNet.getAdjacentSpots(spotID);
-    }
-
-    public void addRoute(String spotID1, String spotID2, int meters){
-        this.spotsNet.addRoute(spotID1, spotID2, meters);
-    }
 
     /**
      * US301 - Constructs a graph based on information from read files data
@@ -114,8 +97,4 @@ public class Domain {
             return mst;
     }
 
-
-    public int obtainDiameter() {
-        return spotsNet.diameter();
-    }
 }

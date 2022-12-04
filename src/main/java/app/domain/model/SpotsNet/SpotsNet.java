@@ -1,65 +1,70 @@
 package app.domain.model.SpotsNet;
 
-import app.domain.graph.Algorithms;
-import app.domain.graph.Edge;
-import app.domain.graph.Graph;
-import app.domain.graph.map.MapGraph;
+import app.domain.model.Route;
+import app.domain.model.Spot;
+import app.domain.utils.graph.Algorithms;
+import app.domain.utils.graph.Edge;
+import app.domain.utils.graph.Graph;
+import app.domain.utils.graph.map.MapGraph;
 
 import java.util.*;
 
 public class SpotsNet {
 
     final private Graph<Spot, Route> spots;
-    private Map<Character, List<Spot>> spotsByType;
-    private Map<Double, List<Spot>> hubs;
+    private HashMap<Character, List<Spot>> spotsByType;
+    private HashMap<String,Spot> spotStore;
+    private List<Spot> hubs;
 
     public SpotsNet(){
         spots = new MapGraph<>(false);
         spotsByType = new HashMap<>();
-        hubs = new TreeMap<>();
+        spotStore =new HashMap<>();
+        hubs = new ArrayList<>();
     }
 
     public Graph<Spot, Route> getSpots() {
         return spots;
     }
 
-
     public HashMap<Character, List<Spot>> getSpotsByType() {
-        return new HashMap<>(spotsByType);
+        return spotsByType;
     }
 
-    public TreeMap<Double, List<Spot>> getHubs() {
-        return new TreeMap<>(hubs);
+    public List<Spot> getHubs() {
+        return hubs;
     }
 
-    public void addSpot(String spotID, double lat, double lng, String spotTypeID){
-        try {
+    public HashMap<String, Spot> getSpotStore() {
+        return spotStore;
+    }
 
-            Character keyType = validateSpotTypeID(spotTypeID);
-            Spot spot = new Spot(spotID, lat, lng, spotTypeID);
-            spots.addVertex(spot);
-            if (spotsByType.containsKey(keyType)) {
-                spotsByType.get(keyType).add(spot);
-            } else {
-                List<Spot> spotsList = new ArrayList<>();
-                spotsList.add(spot);
-                spotsByType.put(keyType, spotsList);
-            }
+    @Override
+    public String toString() {
+        return spots.toString();
+    }
 
-        }catch(IllegalArgumentException e){
-            System.out.println(e.getMessage());
+
+    public void addSpot(Spot spot){
+        spots.addVertex(spot);
+        if (spotsByType.get(spot.getEntity().getEttyType())!=null) {
+            spotsByType.get(spot.getEntity().getEttyType()).add(spot);
+        } else {
+            List<Spot> spotsList = new ArrayList<>();
+            spotsList.add(spot);
+            spotsByType.put(spot.getEntity().getEttyType(), spotsList);
+            spotStore.put(spot.getSpotID(),spot);
         }
     }
 
-    public void addRoute(String spotID1, String spotID2, int distance){
-        //change this to find the spots on the maps
-        Spot spot1 = new Spot(spotID1);
-        Spot spot2 = new Spot(spotID2);
-        Route rt = new Route(distance);
 
-        spots.addEdge(spot1, spot2, rt);
+    public void addRoute(Route route, Spot initial, Spot end){
+        spots.addEdge(initial, end, route);
     }
 
+
+
+    //todo:rever
     public List<Route> getAllRoutes(){
         List<Route> routes = new ArrayList<>();
 
@@ -69,69 +74,6 @@ public class SpotsNet {
                 routes.add( edge.getWeight() );
             }
         return routes;
-    }
-
-    public Character validateSpotTypeID(String spotID){
-
-        String spotIDNumber = spotID.substring(1);
-        try{
-            Integer.parseInt(spotIDNumber);
-        }catch(NumberFormatException e){
-            throw new IllegalArgumentException("Invalid SpotID");
-        }catch (NullPointerException e){
-            throw new IllegalArgumentException("SpotID cannot be null");
-        }
-        if(spotID.charAt(0) == 'C' || spotID.charAt(0) == 'E' || spotID.charAt(0) == 'P'){
-            return spotID.charAt(0);
-        }
-        else{
-            throw new IllegalArgumentException("Invalid SpotID");
-        }
-    }
-
-    public Collection<Spot> getAdjacentSpots(String spotID) {
-        return spots.adjVertices(new Spot(spotID));
-    }
-
-    public void defineNetworkHubs() {
-        //Calcular o caminho mais curto de uma empresa a todos os vértices que sejam clientes ou produtores. (Dijkstra)
-
-        Graph<Spot, Route> minDistGraph = Algorithms.minDistGraph(spots, Route::compareTo, Route::sum);
-        int nrOfClientsAndProducers = this.getSpotsByType().get('C').size() + this.getSpotsByType().get('P').size();
-
-        for (Spot spotiEmpresa : this.getSpotsByType().get('E')) {
-
-            int sum = 0;
-
-            for (Spot spotC : this.getSpotsByType().get('C')) {
-                int distEC = minDistGraph.edge(spotiEmpresa, spotC).getWeight().getDistance();
-                sum = sum + distEC;
-            }
-            for (Spot spotP : this.getSpotsByType().get('P')) {
-                int distEP = minDistGraph.edge(spotiEmpresa, spotP).getWeight().getDistance();
-                sum = sum + distEP;
-            }
-
-            Double media = (double) sum / nrOfClientsAndProducers;
-
-            if (hubs.containsKey(media)) {
-                hubs.get(media).add(spotiEmpresa);
-            } else {
-                List<Spot> spotsList = new ArrayList<>();
-                spotsList.add(spotiEmpresa);
-                hubs.put(media, spotsList);
-            }
-
-        }
-
-    }
-
-    public int getShortestPathDistance(Spot spot1, Spot spot2) {
-        return Algorithms.minDistGraph(spots, Route::compareTo, Route::sum).edge(spot1, spot2).getWeight().getDistance();
-    }
-
-    public Spot getSpotByIndex(int index){
-        return spots.vertex(index);
     }
 
     /**
@@ -179,8 +121,5 @@ public class SpotsNet {
         return diameter;
     }
 
-    @Override
-    public String toString() {
-        return spots.toString();
-    }
+
 }

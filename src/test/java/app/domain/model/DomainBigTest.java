@@ -1,12 +1,8 @@
 package app.domain.model;
 
-import app.domain.graph.Algorithms;
-import app.domain.graph.Graph;
-import app.domain.graph.matrix.MatrixGraph;
-import app.domain.model.SpotsNet.Route;
-import app.domain.model.SpotsNet.Spot;
-import app.externalModule.CsvParserEdges;
-import app.externalModule.CsvParserNodes;
+
+import app.domain.utils.graph.Graph;
+import app.domain.utils.graph.matrix.MatrixGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,7 +70,7 @@ class DomainBigTest {
     @Test
     void testDiameter() {
         int diameterGephi = 28;
-        assertEquals(diameterGephi, instance.obtainDiameter());
+        assertEquals(diameterGephi, instance.getSpotsNet().diameter());
     }
 
     @Test

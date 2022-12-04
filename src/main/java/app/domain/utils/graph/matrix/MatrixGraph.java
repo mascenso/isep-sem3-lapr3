@@ -1,8 +1,8 @@
-package app.domain.graph.matrix;
+package app.domain.utils.graph.matrix;
 
-import app.domain.graph.Edge;
-import app.domain.graph.CommonGraph;
-import app.domain.graph.Graph;
+import app.domain.utils.graph.Edge;
+import app.domain.utils.graph.CommonGraph;
+import app.domain.utils.graph.Graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;

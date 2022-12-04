@@ -1,7 +1,6 @@
-package app.domain.graph;
+package app.domain.utils.graph;
 
-import app.domain.graph.map.MapGraph;
-import app.domain.graph.matrix.MatrixGraph;
+import app.domain.utils.graph.matrix.MatrixGraph;
 
 import java.util.*;
 import java.util.function.BinaryOperator;

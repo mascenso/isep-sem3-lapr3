@@ -1,8 +1,7 @@
-package app.domain.graph.matrix;
+package app.domain.utils.graph.matrix;
 
-import app.domain.graph.Edge;
-import app.domain.graph.Graph;
-import app.domain.graph.matrix.MatrixGraph;
+import app.domain.utils.graph.Edge;
+import app.domain.utils.graph.Graph;
 
 
 import org.junit.jupiter.api.BeforeEach;
