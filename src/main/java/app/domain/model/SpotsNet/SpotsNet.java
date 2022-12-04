@@ -6,6 +6,7 @@ import app.domain.utils.graph.Algorithms;
 import app.domain.utils.graph.Edge;
 import app.domain.utils.graph.Graph;
 import app.domain.utils.graph.map.MapGraph;
+import app.domain.utils.graph.matrix.MatrixGraph;
 
 import java.util.*;
 
@@ -14,13 +15,13 @@ public class SpotsNet {
     final private Graph<Spot, Route> spots;
     private HashMap<Character, List<Spot>> spotsByType;
     private HashMap<String,Spot> spotStore;
-    private List<Spot> hubs;
+    private TreeMap<Double, List<Spot>> hubs; //todo:ver se é possível usar arraylist
 
     public SpotsNet(){
         spots = new MapGraph<>(false);
         spotsByType = new HashMap<>();
         spotStore =new HashMap<>();
-        hubs = new ArrayList<>();
+        hubs = new TreeMap<>();
     }
 
     public Graph<Spot, Route> getSpots() {
@@ -31,7 +32,7 @@ public class SpotsNet {
         return spotsByType;
     }
 
-    public List<Spot> getHubs() {
+    public TreeMap<Double, List<Spot>> getHubs() {
         return hubs;
     }
 
@@ -53,6 +54,9 @@ public class SpotsNet {
             List<Spot> spotsList = new ArrayList<>();
             spotsList.add(spot);
             spotsByType.put(spot.getEntity().getEttyType(), spotsList);
+        }
+
+        if(spotStore.get(spot.getSpotID())==null){
             spotStore.put(spot.getSpotID(),spot);
         }
     }
@@ -97,7 +101,7 @@ public class SpotsNet {
         return spts.contains(spot2);
     }
 
-    public Graph<Spot, Route> getMinimumSpanTree(){
+    public MatrixGraph<Spot, Route> getMinimumSpanTree(){
         return Algorithms.getMinimumSpanTreeKruskal(spots, Route::compareTo);
     }
 
@@ -121,5 +125,41 @@ public class SpotsNet {
         return diameter;
     }
 
+    public void defineNetworkHubs() {
+        //Calcular o caminho mais curto de uma empresa a todos os vértices que sejam clientes ou produtores. (Dijkstra)
+
+        Graph<Spot, Route> minDistGraph = Algorithms.minDistGraph(spots, Route::compareTo, Route::sum);
+        int nrOfClientsAndProducers = this.getSpotsByType().get('C').size() + this.getSpotsByType().get('P').size();
+
+        for (Spot spotiEmpresa : this.getSpotsByType().get('E')) {
+
+            int sum = 0;
+
+            for (Spot spotC : this.getSpotsByType().get('C')) {
+                int distEC = minDistGraph.edge(spotiEmpresa, spotC).getWeight().getDistance();
+                sum = sum + distEC;
+            }
+            for (Spot spotP : this.getSpotsByType().get('P')) {
+                int distEP = minDistGraph.edge(spotiEmpresa, spotP).getWeight().getDistance();
+                sum = sum + distEP;
+            }
+
+            Double media = (double) sum / nrOfClientsAndProducers;
+
+            if (hubs.containsKey(media)) {
+                hubs.get(media).add(spotiEmpresa);
+            } else {
+                List<Spot> spotsList = new ArrayList<>();
+                spotsList.add(spotiEmpresa);
+                hubs.put(media, spotsList);
+            }
+
+        }
+
+    }
+
+    public int getShortestPathDistance(Spot spot1, Spot spot2) {
+        return Algorithms.minDistGraph(spots, Route::compareTo, Route::sum).edge(spot1, spot2).getWeight().getDistance();
+    }
 
 }
