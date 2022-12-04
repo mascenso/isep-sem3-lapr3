@@ -1,5 +1,7 @@
 package app.domain.model;
 
+
+import app.domain.utils.graph.Graph;
 import app.domain.utils.graph.matrix.MatrixGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DomainTest {
 
@@ -15,45 +18,58 @@ class DomainTest {
 
     @BeforeEach
     public void Domain() throws Exception {
+        instance.constructMainGraph();
 
-       instance.addSpot("CT1",40.6389,-8.6553,"C1");
-       instance.addSpot("CT2",38.0333,-7.8833,"C2");
-       instance.addSpot("CT3",41.5333,-8.4167,"C3");
-       instance.addSpot("CT4",41.7,-8.8333,"C4");
-
-
-       instance.addRoute("CT1","CT2",12);
-       instance.addRoute("CT2","CT3",23);
-       instance.addRoute("CT3","CT4",34);
-       instance.addRoute("CT4","CT1",41);
-
+        System.out.println(instance.getSpotsNet());
+        System.out.println(instance.getSpotsNet().getSpotsByType());
+        System.out.println("Nr of producers in the net:" + instance.getSpotsNet().getSpotsByType().get('P').size());
+        System.out.println("Nr of clients in the net:" + instance.getSpotsNet().getSpotsByType().get('C').size());
+        System.out.println("Nr of empresas in the net:" + instance.getSpotsNet().getSpotsByType().get('E').size());
     }
 
     @Test
-    void testGetAdjacentSpotsSmall() {
-        Collection<Spot> spotsObtained = instance.getAdjacentSpots("CT1");
-        Collection<Spot> spotsExpected = new ArrayList<>();
-        spotsExpected.add(new Spot("CT2"));
-        spotsExpected.add(new Spot("CT4"));
+    void testMinimumSpanTree() {
+        double weightMSTGephi = 4231982;
 
-        System.out.println(spotsObtained);
-        System.out.println(spotsExpected);
-        assertTrue(spotsObtained.size() == spotsExpected.size() &&
-                spotsObtained.containsAll(spotsExpected) &&
-                spotsExpected.containsAll(spotsObtained));
+        MatrixGraph<Spot, Route> mst = instance.obtainMinimumSpanTree();
+        assertEquals(weightMSTGephi, mst.calculateTotalWeight(Route::sum, new Route(0)).meters);
     }
 
     @Test
-    void checkIfGraphIsConnectedSmall() {
-        assertEquals(instance.checkIfGraphIsConnected(), true);
+    void checkIfGraphIsConnected() {
+        assertTrue(instance.checkIfGraphIsConnected());
     }
 
     @Test
-    void testMinimumSpanTreeSmall() {
-        Route rExpected = new Route(69);
+    void testDiameter() {
+        int diameterGephi = 28;
+        assertEquals(diameterGephi, instance.getSpotsNet().diameter());
+    }
 
-        MatrixGraph<Spot, Route> mstMatrix = new MatrixGraph<>(instance.obtainMinimumSpanTree());
+    @Test
+    void defineNetworkHubs() {
+        instance.defineNetworkHubs(4);
+    }
 
-        assertEquals(rExpected.meters, mstMatrix.calculateTotalWeight(Route::sum, new Route(0)).meters);
+    @Test
+    void test1shortestPath() {
+        int shortestPathGephi_4_17 = 473192;
+        Spot spot4 =new Spot();
+        Spot spot17 =new Spot();
+        spot4.setSpotID("CT4");
+        spot17.setSpotID("CT17");
+        assertEquals(shortestPathGephi_4_17,
+        instance.getSpotsNet().getShortestPathDistance(spot4, spot17));
+    }
+
+    @Test
+    void test2shortestPath() {
+        int shortestPathGephi_159_86 = 73845;
+        Spot spot159 =new Spot();
+        Spot spot86 =new Spot();
+        spot159.setSpotID("CT159");
+        spot86.setSpotID("CT86");
+        assertEquals(shortestPathGephi_159_86,
+                instance.getSpotsNet().getShortestPathDistance(spot159, spot86));
     }
 }
