@@ -26,7 +26,6 @@ public class Domain {
 
         setDesignation(designation);
         this.userRoleStore = new UserRoleStore();
-
         this.spotsNet= new SpotsNet();
     }
 
