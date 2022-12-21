@@ -20,7 +20,21 @@ unsigned char s_pluvio_reads[S_PLUVIO_QTY][NR_READS];
 
 int main()
 {
+      // Deve ser possivel definir vários sensores de cada tipo
+      // os dados de todos os sensores de um dado tipo devem ser mantidos numa matriz
+      // Ex. Sensor de Temperatura 1
+
+      // unsigned char sensor_type = S_TEMP_INDEX;
+      // Sensor s_temp_1 = create_sensor(sensor_type);
+
+
+
+
+
+      //US101: Function that generates random numbers
       init_rnd();
+
+      //US102 - Pretende-se que sejam gerados valores para os dados dos sensores. (funçoes de sensores.h)
       manage_data();
 }
 
