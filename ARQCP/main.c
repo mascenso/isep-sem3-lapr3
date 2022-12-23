@@ -4,7 +4,7 @@
 #include "random/random.h"
 #include "random/pcg32_random_r.h"
 #include "main.h"
-#include "sensor.h"
+#include "sensor/sensor.h"
 
 unsigned long long state;
 unsigned long long inc;
@@ -37,7 +37,7 @@ int main()
 
       print_sensor(s_temp_1);
       unsigned long freq = read_frequency_from_config_properties();
-      printf("%lu", freq);
+      printf("\n%lu", freq);
 }
 
 void init_rnd()

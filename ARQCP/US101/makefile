@@ -1,9 +1,9 @@
 #ARQCP/Makefile
 # Todo: Improve file organization
 #--#--#--#--#--#--#--#--#--#
-INCLUDES = main.h random/pcg32_random_r.h random/random.h sensor.h
-SOURCES = main.c random/random.c random/pcg32_random_r.s sensor.c
-OBJFILES = main.o random/random.o random/pcg32_random_r.o sensor.o
+INCLUDES = main.h random/pcg32_random_r.h random/random.h sensor/sensor.h
+SOURCES = main.c random/random.c random/pcg32_random_r.s sensor/sensor.c
+OBJFILES = main.o random/random.o random/pcg32_random_r.o sensor/sensor.o
 
 OBJFILES2 = main.o random.o pcg32_random_r.o sensor.o
 EXEC = ./sensores
