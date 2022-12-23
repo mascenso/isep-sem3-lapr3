@@ -4,6 +4,7 @@
 #include "random/random.h"
 #include "random/pcg32_random_r.h"
 #include "main.h"
+#include "sensor.h"
 
 unsigned long long state;
 unsigned long long inc;
@@ -24,18 +25,19 @@ int main()
       // os dados de todos os sensores de um dado tipo devem ser mantidos numa matriz
       // Ex. Sensor de Temperatura 1
 
-      // unsigned char sensor_type = S_TEMP_INDEX;
-      // Sensor s_temp_1 = create_sensor(sensor_type);
-
-
-
-
+      unsigned char sensor_type[2] = "TA";
+      Sensor *s_temp_1 = create_sensor(123, sensor_type);
+      
 
       //US101: Function that generates random numbers
       init_rnd();
 
       //US102 - Pretende-se que sejam gerados valores para os dados dos sensores. (funçoes de sensores.h)
       manage_data();
+
+      print_sensor(s_temp_1);
+      unsigned long freq = read_frequency_from_config_properties();
+      printf("%lu", freq);
 }
 
 void init_rnd()

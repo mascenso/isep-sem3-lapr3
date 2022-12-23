@@ -56,6 +56,16 @@ Critério de aceitação: Deve ser possível ter vários sensores de um mesmo ti
 também determinado durante a execução. Para cada tipo de sensor considerado, deve existir um
 array dinâmico de estruturas.
 
+**bases de dados diz:
+f o tipo de sensor é caracterizado da seguinte forma:
+ HS – Sensor de humidade do solo
+ Pl – Sensor de pluviosidade
+ TS – Sensor de temperatura do solo
+ VV – Sensor de velocidade do vento
+ TA – Sensor de temperatura atmosférica
+ HA – Sensor de humidade do ar
+ PA – Sensor de pressão atmosférica
+
 US111 - Durante a execução do programa deve ser possível:
 . acrescentar/remover sensores de um dado tipo
 . alterar a frequência de leituras de um sensor, ajustando devidamente o vetor de leituras
