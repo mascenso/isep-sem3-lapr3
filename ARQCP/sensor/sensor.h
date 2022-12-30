@@ -43,7 +43,7 @@ Sensor *create_sensor(unsigned short id, unsigned char sensor_type[2]); // By no
 //Function to destroy (free) a sensor
 void destroy_sensor(Sensor *sensor);
 
-unsigned long read_frequency_from_config_properties(unsigned char *sensor_type);
+// unsigned long read_frequency_from_config_properties(unsigned char *sensor_type);
 
 void print_sensor(Sensor *sensor);
 
