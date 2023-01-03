@@ -1,27 +1,37 @@
+/*
+ * =====================================================================================
+ *  Reads random numbers from /dev/random
+ *  Works on Linux/OSX and other "Unixes"
+ *
+ *  Taken from:
+ *
+ *  David Johnston
+ *  Random Number Generators—Principles and Practices
+ *  2018 Walter de Gruyter GmbH
+ *  ISBN 978-1-5015-1513-2
+ *
+ * =====================================================================================
+ */
+
 #include <stdio.h>
-
-unsigned int rnd()
-{
-	const int SIZE = 1;
-	unsigned int buffer[SIZE];
-	FILE *f;
-	int result;
-
-	f = fopen("/dev/urandom", "r");
-
-	if (f == NULL)
-	{
-		printf("ERROR: open() failed to open /dev/urandom for reading\n");
-		return 1;
-	}
-
-	result = fread(buffer, sizeof(unsigned int), SIZE, f);
-
-	if (result < 1)
-	{
-		printf("ERROR: failed to read any words\n");
-		return 1;
-	}
-
-	return buffer[0];
+#include <stdint.h>
+int random() {
+    uint32_t buffer [1];
+    FILE *f;
+    int result;
+    //int i;
+    f = fopen("/dev/urandom", "r");
+    if (f == NULL) {
+        printf("Error: open() failed to open /dev/random for reading\n");
+        return 1;
+        }
+    result = fread(buffer , sizeof(uint32_t), 1,f);
+    if (result < 1) {
+        printf("error , failed to read and words\n");
+        return 1;
+        }
+    //printf("Read %d words from /dev/urandom\n",result);
+    //for(i=0;i<result;i++)
+    // printf("%08x\n",buffer[i]);
+    return buffer[0];
 }

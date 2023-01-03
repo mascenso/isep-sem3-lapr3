@@ -2,21 +2,23 @@
  * =====================================================================================
  *  PCG Random generator
  *
- *  See:  https://www.pcg-random.org 
+ *  See:  https://www.pcg-random.org
  *
- *  "Uglyfied" for an easier  assembly translation  
+ *  "Uglyfied" for an easier  assembly translation
  *
- *  Note: the values of state and inc should be initialized with values from /dev/random  
- *  
+ *  Note: the values of state and inc should be initialized with values from /dev/random
+ *
  * =====================================================================================
  */
 
-#include <stdio.h> 
-#include <stdint.h> 
-uint64_t state=0;  
+#include <stdio.h>
+#include <stdint.h>
+#include "random.h"
+
+uint64_t state=0;
 uint64_t inc=0;
 
-uint32_t pcg32_random_r()
+uint32_t pcg32_random_r_c()
 {
     uint64_t oldstate = state;
     // Advance internal state
@@ -27,12 +29,22 @@ uint32_t pcg32_random_r()
     return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
 }
 
-int main()
-    { 
-      int i; 
-      for(i=0;i<32;i++) 
-		printf("%8x\n",pcg32_random_r()); 
-      return 0; 
-    } 
+int32_t pcg32_random_r_c_init()
+    {
+        state=random();
+        inc=random();
 
-	
+        int i;
+        for(i=0;i<32;i++)
+        //discard first 32 values
+		        pcg32_random_r_c();
+
+      return pcg32_random_r_c();
+    }
+
+uint32_t pcg32_random_r_c_min_max( int min, int max)
+    {
+
+      return (pcg32_random_r_c_init() % (max - min + 1)) + min;
+
+    }
