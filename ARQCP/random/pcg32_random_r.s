@@ -130,34 +130,18 @@ ret
 
 pcg32_random_r_min_max:
 
-# return ( pcg32_random_r_c_init() % (max - min + 1) ) + min;
-# %max is in %edi
-# %min is in %esi
+	movl	%edi, -4(%rbp)
+	movl	%esi, -8(%rbp)
+	movl	$0, %eax
 
-# dividend : % eax
-    pushq %rdi
-    pushq %rsi
-    pushq %rcx
-    call pcg32_random_r_init # %eax has the 32 bit random generated number
-    popq %rcx
-    popq %rsi
-    popq %rdi
+	call	pcg32_random_r_init
 
-# converts the signed long in % eax to the signed double long in % edx :% eax
-    cltd
+	movl	-8(%rbp), %edx
+	subl	-4(%rbp), %edx
+	leal	1(%rdx), %ecx
+	cltd
+	idivl	%ecx
+	movl	-4(%rbp), %eax
+	addl	%edx, %eax
 
-# divisor : edi
-    subl %esi, %edi # %edi = %max - %min
-    addl $1, %edi # %edi = %max - %min + 1
-
-# divides % edx :% eax by % edi ( remainder in % edx , quotient in % eax )
-    idivl % edi
-    addl $1, %edx
-    movl $0, %eax
-    movl %edx, %eax
-
-    ret
-
-
-
-
+	ret
