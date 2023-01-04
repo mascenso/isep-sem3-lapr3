@@ -9,14 +9,15 @@ As funções do programa para ARQCP estão divididas em diretórios:
 * write_matrix_to_csv: Funções para escrever matrizes para ficheiros CSV
 * write_sensor_to_csv: Funções para escrever sensores para ficheiros CSV
 * main.c: Ficheiro principal do programa
-* Makefile: Ficheiro para compilar o programa
+* makefile: Ficheiro para compilar o programa
 * README.md: Ficheiro com a descrição do programa
 
 Todos os diretorios contêm um makefile próprio e um "main.c" com um demo de cada função
 
 # Compilação e execução:
-Para compilar o programa, basta executar o comando "make" no diretório principal do programa. 
-Para executar o programa, basta executar o comando "./main" no diretório principal do programa.
+Para compilar o programa, basta executar o comando "make run" no diretório principal do programa. 
+
+Para executar cada demo do programa basta executar o comando "make run" no diretório pretendido.
 
 
 # Descrição das User Stories:
@@ -31,15 +32,14 @@ Considera-se que os sensores produzem dados nas seguintes unidades:
  percentagem para a humidade do solo
  mm para a pluviosidade
 
-### US101 - Pretende-se que seja implementada em Assembly uma função que gere números
-pseudo-aleatórios, a ser usada na simulação dos sensores. É disponibilizada em C a função
-pcg32_ramdom_r() e pretende-se que seja desenvolvida em Assembly uma função equivalente. É
-também disponibilizado um exemplo de como ler de /dev/random para inicializar o gerador
+### US101 - Pretende-se que seja implementada em Assembly uma função que gere números pseudo-aleatórios, a ser usada na simulação dos sensores. 
+É disponibilizada em C a função pcg32_ramdom_r() e pretende-se que seja desenvolvida em Assembly 
+uma função equivalente. 
+É também disponibilizado um exemplo de como ler de /dev/random para inicializar o gerador
 indicado anteriormente.
 
-### US102 - Pretende-se que sejam gerados valores para os dados dos sensores. Cada sensor de um
-dado tipo deve produzir valores com uma determinada frequência (por exemplo, 20 segundos). Os
-protótipos das funções a desenvolver em Assembly estão indicados em anexo.
+### US102 - Pretende-se que sejam gerados valores para os dados dos sensores. Cada sensor de um dado tipo deve produzir valores com uma determinada frequência (por exemplo, 20 segundos). 
+Os protótipos das funções a desenvolver em Assembly estão indicados em anexo.
 Critério de aceitação: os valores gerados devem ter alguma coerência, quer entre valores
 consecutivos, quer, em alguns casos, entre os valores gerados por sensores de tipos diferentes.
 
