@@ -4,11 +4,10 @@
 #include <string.h>
 
 
-Sensor *create_sensor(unsigned short id, unsigned char sensor_type[2]){
+Sensor *create_sensor(unsigned short id, unsigned char sensor_type){
     Sensor *sensor = (Sensor*)malloc(sizeof(Sensor));
     sensor->id = id;
-    sensor->sensor_type[0] = sensor_type[0];
-    sensor->sensor_type[1] = sensor_type[1];
+    sensor->sensor_type = sensor_type;
     sensor->max_limit = 0;
     sensor->min_limit = 0;
     sensor->frequency = 0;
@@ -23,7 +22,8 @@ void destroy_sensor(Sensor *sensor){
 };
 
 void print_sensor(Sensor *sensor){
-    printf("Sensor ID: %d | Sensor Type: %s\n", sensor->id, sensor->sensor_type);
+    printf("Sensor ID: %d | Sensor Type: %d\n", sensor->id, sensor->sensor_type);
+    printf("Freq: %ld", sensor->frequency);
 };
 
 // unsigned long read_frequency_from_config_properties(unsigned char *sensor_type) {

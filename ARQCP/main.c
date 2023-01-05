@@ -8,9 +8,8 @@
 //#include "main.h"
 #include "sensor/sensor.h"
 
-unsigned int nr_reads = 0;
-uint64_t state=0;
-uint64_t inc=0;
+uint64_t state;
+uint64_t inc;
 
 int main()
 {
@@ -18,7 +17,7 @@ int main()
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--* SPRINT 1 *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
 
-            /**US101: Function that generates random numbers **/
+             /** US101: Function that generates random numbers **/
 
                 int min = 0;
                 int max = 500;
@@ -29,14 +28,16 @@ int main()
                 int number = pcg32_random_r_min_max(min, max);
                 printf("Random value_ASM with bounds min=%d and max=%d: %d\n", min, max, number);
 
-                /**US102: Gerar valores para os dados dos sensores (sensores.h) **/
+             /** US102: Gerar valores para os dados dos sensores (sensores.h) **/
 
                     printf("%d\n",sens_temp(20, inc));
 
-                /**US103: Construir em C, a matriz diaria de resumo **/
+             /** US103: Construir em C, a matriz diaria de resumo **/
                 /** Para cada tipo de sensor deve ser determinado o valor máximo, o mínimo e a média das leituras **/
 
-                /** US104 - Deve ser possível estabelecer limites máximos e mínimos para os valores produzidos por um sensor. **/
+
+
+             /** US104 - Deve ser possível estabelecer limites máximos e mínimos para os valores produzidos por um sensor. **/
                 // Se o valor enviado pelo sensor estiver fora desse limite, deve ser assinalado o erro.
                 // Após N leituras consecutivas erradas, deve ser possível reiniciar o sensor,
                 // iniciando-se assim uma nova sequência de valores produzidos.
@@ -47,17 +48,19 @@ int main()
             /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--* SPRINT 2 *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
             /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
 
-            // US110 - A informação de cada sensor deve ser armazenada numa estrutura
+            /** US110 - A informação de cada sensor deve ser armazenada numa estrutura **/
 
-                   create_sensor(1, 0);
+                // Critério de aceitação: Deve ser possível ter vários sensores de um mesmo tipo, cujo número é
+                //também determinado durante a execução. Para cada tipo de sensor considerado, deve existir um
+                //array dinâmico de estruturas:
 
+                Sensor **sensors = create_sensor_array(6);
+                create_sensor_and_create_id(0);
+                create_sensor_and_create_id(0);
 
-            // US111 - Durante a execução do programa deve ser possível:
-            // . acrescentar/remover sensores de um dado tipo . alterar a frequência de leituras de um sensor,
+            /** US111 - Durante a execução do programa deve ser possível: **/
+            /** . acrescentar/remover sensores de um dado tipo . alterar a frequência de leituras de um sensor, **/
 
-                    Sensor **sensors = create_sensor_array(6);
-                    create_sensor_and_create_id(0);
-                    create_sensor_and_create_id(0);
                     create_sensor_and_create_id(2);
                     create_sensor_and_create_id(5);
                     print_sensor_array(sensors);
@@ -66,10 +69,14 @@ int main()
 
                     print_sensor_array(sensors);
 
+                    //change_frequency(Sensor **sensor_array, unsigned short id, unsigned short frequency);
+                    change_frequency(sensors, 2, 10);
+
+                    print_sensor_array(sensors);
 
 
-            //US112 - Em C, exporte para um ficheiro CSV, os dados e leituras de cada um dos sensores
-            //        Crie outro ficheiro CSV com os dados da matriz diária de resumo
+            /** US112 - Em C, exporte para um ficheiro CSV, os dados e leituras de cada um dos sensores **/
+            //        Crie outro ficheiro CSV com os dados da matriz diária de resumo **/
 
             //print_sensor(s_temp_1);
 

@@ -56,7 +56,32 @@
                 break;
             }
         }
+    }
 
+    //Get a sensor from the matrix
+    Sensor *get_sensor(Sensor **sensor_array, unsigned short id){
+        // Get the type of the sensor
+        int type = id >> 8;
+        //find the sensor
+        for(int i = 0; i < idCount[type]; i++){
+            if(sensor_array[type][i].id == id){
+                return &sensor_array[type][i];
+            }
+        }
+        return NULL;
+    }
+
+    //Change frequency of a sensor
+    void change_frequency(Sensor **sensor_array, unsigned short id, unsigned short frequency){
+        // Get the type of the sensor
+        int type = id >> 8;
+        //find the sensor
+        for(int i = 0; i < idCount[type]; i++){
+            if(sensor_array[type][i].id == id){
+                sensor_array[type][i].frequency = frequency;
+                break;
+            }
+        }
     }
 
 
@@ -71,6 +96,7 @@
             if(sensor_array[i] != NULL){
                 for(int j = 0; j < idCount[i]; j++){
                     print_id (sensor_array[i][j].id);
+                    printf("freq=%ds\n", sensor_array[i][j].frequency);
                 }
             }
         }
