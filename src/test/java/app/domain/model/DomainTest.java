@@ -5,6 +5,7 @@ import app.domain.utils.RankableMap;
 import app.domain.utils.graph.Graph;
 import app.domain.utils.graph.matrix.MatrixGraph;
 import com.sun.source.tree.NewArrayTree;
+import app.enums.EntityType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

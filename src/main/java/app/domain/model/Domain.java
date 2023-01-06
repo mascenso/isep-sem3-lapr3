@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class Domain {
 
-    //todo:talvez não seja necessário
     private String designation;
 
     private UserRoleStore userRoleStore;

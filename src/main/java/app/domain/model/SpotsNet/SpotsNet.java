@@ -7,13 +7,14 @@ import app.domain.utils.graph.Algorithms;
 import app.domain.utils.graph.Graph;
 import app.domain.utils.graph.map.MapGraph;
 import app.domain.utils.graph.matrix.MatrixGraph;
+import app.enums.EntityType;
 
 import java.util.*;
 
 public class SpotsNet {
 
     final private Graph<Spot, Route> spots;
-    private HashMap<Character, List<Spot>> spotsByType;
+    private HashMap<EntityType, List<Spot>> spotsByType;
     private HashMap<String,Spot> spotStore;
     private RankableMap<Spot, Double> hubs;
 
@@ -32,7 +33,7 @@ public class SpotsNet {
         return spots;
     }
 
-    public HashMap<Character, List<Spot>> getSpotsByType() {
+    public HashMap<EntityType, List<Spot>> getSpotsByType() {
         return spotsByType;
     }
 

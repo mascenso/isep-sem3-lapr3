@@ -1,10 +1,12 @@
 package app.domain.model;
+import app.enums.EntityType;
+
 import java.util.HashMap;
 import java.util.Map;
 public class Entity implements Comparable<Entity> {
 
     private String iD; // Clientes-Produtores, ex: C1
-    private Character ettyType; //tipo: C
+    private EntityType ettyType; //tipo: C
     //Map<Day, Map<ProdID, Qty>, develop classes if necessary.
     //Develop a class Basket if necessary. (Sprint 2)
     private final Map<Integer, Map<Integer, Double>> basket; // cabazes
@@ -15,7 +17,7 @@ public class Entity implements Comparable<Entity> {
     }
 
     public Entity(String iD) {
-        setEttyType(iD.charAt(0));
+        ettyType = EntityType.valueOf(iD.charAt(0));
         setiD(iD);
         basket = new HashMap<>();
     }
@@ -31,11 +33,11 @@ public class Entity implements Comparable<Entity> {
         this.iD = iD;
     }
 
-    public void setEttyType(Character ettyType) {
+    public void setEttyType(EntityType ettyType) {
         this.ettyType = ettyType;
     }
 
-    public Character getEttyType() {
+    public EntityType getEttyType() {
         return ettyType;
     }
 

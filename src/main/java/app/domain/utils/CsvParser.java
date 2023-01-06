@@ -6,6 +6,7 @@ import app.domain.model.Entity;
 import app.domain.model.Route;
 import app.domain.model.Spot;
 import app.interfaces.GlobalConstants;
+import app.enums.EntityType;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -91,7 +92,16 @@ public class CsvParser implements GlobalConstants {
                                     loadedData = loadedData + 1;
                                     // if all data is valid the objects are created and added to Graph
                                     entity_aux.setiD(data[CLIENTES_PRODUTORES]);
-                                    entity_aux.setEttyType(data[CLIENTES_PRODUTORES].charAt(0));
+                                    //C: Client, P: Producer, E: Company
+                                    Character type = data[CLIENTES_PRODUTORES].charAt(0);
+                                    if(type.equals('C')) {
+                                        entity_aux.setEttyType(EntityType.CLIENT);
+                                    } else if(type.equals('P')) {
+                                        entity_aux.setEttyType(EntityType.PRODUCER);
+                                    } else if(type.equals('E')) {
+                                        entity_aux.setEttyType(EntityType.EMPRESA);
+                                    }
+
                                     spot_aux.setSpotID(data[LOC_ID]);
                                     spot_aux.setLng(Double.parseDouble(data[LONGITUDE]));
                                     spot_aux.setLat(Double.parseDouble(data[LATITUDE]));
