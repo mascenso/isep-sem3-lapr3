@@ -95,8 +95,8 @@
         for(int i = 0; i < 6; i++){
             if(sensor_array[i] != NULL){
                 for(int j = 0; j < idCount[i]; j++){
+                    printf("freq=%lds | ", sensor_array[i][j].frequency);
                     print_id (sensor_array[i][j].id);
-                    printf("freq=%ds\n", sensor_array[i][j].frequency);
                 }
             }
         }
