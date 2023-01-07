@@ -4,8 +4,8 @@
 
 // Nr of sensors types
 #define S_NUMBER 6
-static const char *SENSOR_NAMES[S_NUMBER] = {"TA", "VV"  , "DV", "HA", "HS", "Pl"};
-static const char *SENSOR_UNITS[S_NUMBER] =  {"ºc", "km/h", "º" , "%" , "%" , "mm"};
+//static const char *SENSOR_NAMES[S_NUMBER] = {"TA", "VV"  , "DV", "HA", "HS", "Pl"};
+//static const char *SENSOR_UNITS[S_NUMBER] =  {"ºc", "km/h", "º" , "%" , "%" , "mm"};
 
 Sensor **create_sensor_array(int types);
 Sensor **resize_sensor_array(Sensor **sensor_array, int types);
@@ -18,6 +18,8 @@ void free_sensor_array(Sensor **sensor_array, int types, int sensors);
 void print_sensor_array(Sensor **sensor_array);
 void print_id (unsigned short id);
 unsigned short createId(unsigned char id_number, unsigned char sensor_type);
+
+void change_frequency(Sensor **sensor_array, unsigned short id, unsigned short frequency);
 
 Sensor *create_sensor_and_create_id(unsigned char sensor_type);
 

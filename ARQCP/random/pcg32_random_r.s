@@ -127,7 +127,6 @@ pcg32_random_r_init:
 
 ret
 
-
 pcg32_random_r_min_max:
 
 	movl	%edi, -4(%rbp)

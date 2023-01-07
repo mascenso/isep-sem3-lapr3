@@ -11,6 +11,8 @@
 uint64_t state;
 uint64_t inc;
 
+int wait_for_user_input();
+
 int main()
 {
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
@@ -109,6 +111,7 @@ int main()
 
                     printf("Removing a sensor...\n");
                     sleep(1);
+                    printf("Removing sensor with id: %d\n", 1);
                     remove_sensor(sensors, 1);
 
                     printf("\nPrinting all stored sensors...\n");
@@ -146,9 +149,10 @@ int main()
 }
 
 
-    void wait_for_user_input()
+    int wait_for_user_input()
     {
         printf("\nPress Enter to Continue\n");
         getchar();
+        return 0;
     }
 
