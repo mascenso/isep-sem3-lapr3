@@ -22,16 +22,45 @@ int main()
 
       printf("Valor do comp_rand: %d\n", comp_rand);
 
-        char ult_temp = 20;
+        char ult_val = 0;
 
         printf("Valores do sensor de temperatura:\n");
         int i = 0;
         while(i<10){
-            temp = sens_temp(ult_temp, comp_rand);
-            ult_temp = temp;
+            temp = sens_temp(ult_val, comp_rand);
+            ult_val = temp;
 
             printf("[%d]", temp);
             i++;
         }
+        printf("\n");
+        printf("Valores do sensor de velocidade do vento:\n");
+        i = 0;
+                while(i<10){
+                    temp = sens_velc_vento(ult_val, comp_rand);
+                    ult_val = temp;
+
+                    printf("[%d]", temp);
+                    i++;
+                }
+        printf("\n");
+                printf("Valores do sensor de direcao do vento:\n");
+                i = 0;
+                        while(i<10){
+                            temp = sens_dir_vento(ult_val, comp_rand);
+                            ult_val = temp;
+
+                            printf("[%d]", temp);
+                            i++;
+                        }
+                        printf("\n");
+         printf("Valores do sensor de pluviosidade:\n");
+         i = 0;
+                 while(i<10){
+                     temp = sens_pluvio(20, ult_val, comp_rand);
+                     ult_val =
+                     printf("[%d]", temp);
+                     i++;
+                 }
       return 0;
 }
