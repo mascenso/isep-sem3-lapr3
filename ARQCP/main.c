@@ -8,13 +8,14 @@
 #include "sensor_gerar/inserir_values.h"
 #include "sensores/all_sensors.h"
 
-//#include "main.h"
+#include "main.h"
 #include "sensor/sensor.h"
 
 uint64_t state;
 uint64_t inc;
 
 int wait_for_user_input();
+void get_s_measures(char *ptrInput, float *ptrOutput);
 
 int main()
 {
@@ -34,7 +35,6 @@ int main()
                  US101 Demo: Function that generates random numbers
                  **/
                 printf("US101: A function that generates random numbers\n\n");
-
 
                 int min = 0;
                 int max = 500;
@@ -60,9 +60,17 @@ int main()
                 wait_for_user_input();
                 printf("US103: Build in C, the daily summary matrix\n\n");
 
+                // Matrixes for the sensors values
+
+                float s_measures[S_NUMBER][S_NR_MEASURES];
+                char s_temp_reads[S_TEMP_QTY][NR_READS];
+
+                char *ptrSensor = &s_temp_reads[0][0];
+                float *ptrSummary = &s_measures[0][0];
+
+                get_s_measures(ptrSensor, ptrSummary);
+
                 printf("\n");
-
-
 
                 /**
                 US104 - Deve ser possível estabelecer limites máximos e mínimos para os valores produzidos por um sensor.
@@ -96,7 +104,6 @@ int main()
 
                     printf("-->Creating and storing some sensors...\n\n");
                     sleep(0.5);
-                    Sensor **sensors = create_sensor_array(6);
 
                     create_sensor_and_create_id(0);
                     sleep(1);
@@ -156,6 +163,8 @@ int main()
                     printf("Exporting readings to folder 'output files'...\n");
                     printf("Export successful.\n");
 
+                    free_all_sensors(sensors);
+
                     printf("End of program.\n");
 }
 
@@ -165,5 +174,60 @@ int main()
         printf("\nPress Enter to Continue\n");
         getchar();
         return 0;
+    }
+
+    void get_s_measures(char *ptrInput, float *ptrOutput){
+
+        int max, min, sum;
+
+        max = 0;
+        sum = 0;
+
+        char *ptr1;
+        float *ptr4;
+
+        float avg=0;
+
+        ptr1 = ptrInput;
+        ptr4 = ptrOutput;
+
+        // *************************
+        // finding the maximum value
+        // saving it to the output
+        // array using pointers
+        // *************************
+
+        for(int x = 0; x < S_TEMP_QTY; x++){
+            if(x == 0){
+                max = *ptr1;
+            }
+            for(int y = 0; y < NR_READS; y++){
+                if(max <= *ptr1) {
+                    max = *ptr1;
+                }
+                if(min >= *ptr1) {
+                    min = *ptr1;
+                }
+                sum = sum + *ptr1;
+                ptr1++;
+            }
+        }
+          avg = (float)sum / (NR_READS*S_TEMP_QTY);
+
+          printf("------------------\n");
+          printf("TEMP MIN=%d\n",min);
+          printf("TEMP MAX=%d\n",max);
+          printf("TEMP SUM=%d\n",sum);
+          printf("TEMP AVG=%lf\n",avg);
+          printf("------------------\n");
+
+          *ptr4 = min;
+          ptr4++;
+          *ptr4 = max;
+          ptr4++;
+          *ptr4 = avg;
+
+        ptr4 = ptrOutput;
+
     }
 

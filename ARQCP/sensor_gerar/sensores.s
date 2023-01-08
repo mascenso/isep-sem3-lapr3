@@ -11,9 +11,7 @@
 .equ WINDDIR_DELTA, 20
 .equ PLUVIO_DELTA, 20
 
-.equ LIMIT_TEMP_BAIXA, 7
 .equ LIMIT_TEMP_MEDIA, 16
-.equ LIMIT_TEMP_ALTA, 100
 
 	
 sens_temp:            # char sens_temp(char ult_temp, char comp_rand);

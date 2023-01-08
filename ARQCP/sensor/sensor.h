@@ -46,7 +46,8 @@ Sensor *create_sensor(unsigned short id, unsigned char sensor_type);
 void destroy_sensor(Sensor *sensor);
 
 // unsigned long read_frequency_from_config_properties(unsigned char *sensor_type);
-
 void print_sensor(Sensor *sensor);
+
+void inserir_value_no_readings();
 
 #endif
