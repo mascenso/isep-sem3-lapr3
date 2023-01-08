@@ -22,5 +22,6 @@ unsigned short createId(unsigned char id_number, unsigned char sensor_type);
 void change_frequency(Sensor **sensor_array, unsigned short id, unsigned short frequency);
 
 Sensor *create_sensor_and_create_id(unsigned char sensor_type);
+void free_all_sensors(Sensor **sensor_array);
 
 #endif

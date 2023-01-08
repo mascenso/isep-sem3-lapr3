@@ -35,7 +35,7 @@
         // Get the type of the sensor
         int type = id >> 8;
 
-        // If the sensor is the last one, just free the memory
+        // If the sensor is the last one, free
         if(idCount[type] == 1){
             free(sensor_array[type]);
             sensor_array[type] = NULL;
@@ -125,4 +125,13 @@
         unsigned char idNumber = id & 0x00FF;
         unsigned char idType = id >> 8;
         printf("Sensor type: %d, Sensor id_num: %d (ID%d)\n", idType, idNumber, id);
+    }
+
+    void free_all_sensors(Sensor **sensor_array){
+        for(int i = 0; i < 6; i++){
+            if(sensor_array[i] != NULL){
+                free(sensor_array[i]);
+            }
+        }
+        free(sensor_array);
     }
