@@ -4,10 +4,10 @@
 #include "read_config.h"
 
 int main(void) {
-    
-    // Open the configuration file in read mode
 
-    Configs *cfg = get_init_config();
+    char *path = "config.cfg";
+
+    Configs *cfg = get_init_config(path);
     if(cfg == NULL) return 1;
 
     SensorsConfig *scfg = get_sensors_config(cfg);

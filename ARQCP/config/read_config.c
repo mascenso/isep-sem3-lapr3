@@ -3,9 +3,9 @@
 #include <string.h>
 #include "read_config.h"
 
-Configs *get_init_config(){
-    
-    FILE *fp = fopen("config.cfg", "r");
+Configs *get_init_config(char *filename){
+
+    FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
         perror("Error opening file");
         return NULL;

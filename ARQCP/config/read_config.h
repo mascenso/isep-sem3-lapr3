@@ -25,7 +25,7 @@
         unsigned char nrerrors; // number of consecutive read errors
     } SensorsConfig;
 
-    Configs *get_init_config();
+    Configs *get_init_config(char *filename);
     SensorsConfig *get_sensors_config(Configs *cfg);
 
 #endif
