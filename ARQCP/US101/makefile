@@ -1,6 +1,11 @@
 #ARQCP/Makefile
 # File organization:
 
+#-Configuration: - folder config -
+CONFIG_INCLUDES = config/read_config.h
+CONFIG_SOURCES = config/read_config.c
+CONFIG_OBJECTS = config/read_config.o
+
 #-Random number generator: - folder random -
 RANDOM_INCLUDES = random/random.h random/pcg32_random_r.h
 RANDOM_SOURCES = random/random.c random/pcg32_random_r.s
@@ -22,11 +27,11 @@ SENSORES_SOURCES = sensores/all_sensors.c
 SENSORES_OBJECTS = sensores/all_sensors.o
 
 #--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#
-INCLUDES =  $(RANDOM_INCLUDES) $(SENSOR_GERAR_INCLUDES) $(SENSOR_INCLUDES) $(SENSORES_INCLUDES)
-SOURCES =  main.c $(RANDOM_SOURCES)  $(SENSOR_GERAR_SOURCES) $(SENSOR_SOURCES) $(SENSORES_SOURCES)
-OBJFILES = main.o $(RANDOM_OBJECTS)  $(SENSOR_GERAR_OBJECTS) $(SENSOR_OBJECTS) $(SENSORES_OBJECTS)
+INCLUDES =  $(CONFIG_INCLUDES) $(RANDOM_INCLUDES) $(SENSOR_GERAR_INCLUDES) $(SENSOR_INCLUDES) $(SENSORES_INCLUDES)
+SOURCES =  main.c $(CONFIG_INCLUDES) $(RANDOM_SOURCES)  $(SENSOR_GERAR_SOURCES) $(SENSOR_SOURCES) $(SENSORES_SOURCES)
+OBJFILES = main.o $(CONFIG_OBJECTS) $(RANDOM_OBJECTS)  $(SENSOR_GERAR_OBJECTS) $(SENSOR_OBJECTS) $(SENSORES_OBJECTS)
 
-OBJFILES2 = main.o random.o pcg32_random_r.o sensor.o sensores.o inserir_values.o all_sensors.o
+OBJFILES2 = main.o read_config.o random.o pcg32_random_r.o sensor.o sensores.o inserir_values.o all_sensors.o
 EXEC = ./mainprogram
 #--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
+#include "config/read_config.h"
 #include "random/random.h"
 #include "random/pcg32_random_r.h"
 #include "sensor_gerar/sensores.h"
@@ -17,6 +18,14 @@ int wait_for_user_input();
 
 int main()
 {
+            //Read all info from config file in folder config
+            char *path = "config.cfg";
+            Configs *cfg = get_init_config(path);
+            SensorsConfig *scfg = get_sensors_config(cfg);
+
+            //Creates an array of sensors, organized by their type
+            Sensor **sensors = create_sensor_array(S_NUMBER);
+
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--* SPRINT 1 *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
