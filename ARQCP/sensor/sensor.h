@@ -1,6 +1,8 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
+#include "../config/read_config.h"
+
 typedef struct
 {
     unsigned short id;
@@ -14,7 +16,6 @@ typedef struct
     unsigned long readings_size;
     // array de leituras diárias 
     unsigned short *readings;
-
     //...
     // adicionar o que acharem conveniente
 } Sensor;
@@ -39,7 +40,7 @@ typedef struct
 int define_readings_size(Sensor *sensor);
 
 //Function to create a sensor
-Sensor *create_sensor(unsigned short id, unsigned char sensor_type); // By now
+Sensor *create_sensor(unsigned short id, unsigned char sensor_type);
 
 //Function to destroy (free) a sensor
 void destroy_sensor(Sensor *sensor);

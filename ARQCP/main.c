@@ -4,7 +4,9 @@
 #include "random/random.h"
 #include "random/pcg32_random_r.h"
 #include "sensor_gerar/sensores.h"
+#include "sensor_gerar/inserir_values.h"
 #include "sensores/all_sensors.h"
+
 //#include "main.h"
 #include "sensor/sensor.h"
 
@@ -41,7 +43,6 @@ int main()
                 wait_for_user_input();
                 printf("US102: Generate values for sensor data\n\n");
 
-                printf("%d\n",sens_temp(20, inc));
 
                 /**
                 US103: Construir em C, a matriz diaria de resumo
@@ -50,7 +51,8 @@ int main()
                 wait_for_user_input();
                 printf("US103: Build in C, the daily summary matrix\n\n");
 
-                printf("todo\n");
+                printf("\n");
+
 
 
                 /**

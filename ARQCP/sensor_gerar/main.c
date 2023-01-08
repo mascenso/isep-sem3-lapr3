@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "sensores.h"
+#include "inserir_values.h"
 #include "../random/random.h"
 #include "../random/pcg32_random_r.h"
 
-//char sens_temp(char ult_temp, char comp_rand);
-//unsigned short sens_dir_vento(unsigned short ult_dir_vento, short comp_rand);
-//unsigned char sens_pluvio(unsigned char ult_pluvio, char ult_temp, char comp_rand);
 uint64_t state=0;
 uint64_t inc=0;
 
@@ -14,53 +12,92 @@ int main()
 {
 /**US102: Gerar valores para os dados dos sensores **/
 
-      //readings_temp[0] = 20;
       char comp_rand = random();
       state = random();
       inc = random();
-      char temp;
 
       printf("Valor do comp_rand: %d\n", comp_rand);
 
-        char ult_val = 0;
+      unsigned long readings_size;
+      unsigned short *readings;
+      char string[] = "Sensor Temperatura";
+      char *sensor_name;
+      sensor_name = string;
 
-        printf("Valores do sensor de temperatura:\n");
-        int i = 0;
-        while(i<10){
-            temp = sens_temp(ult_val, comp_rand);
-            ult_val = temp;
+      // Sensor Temperatura:
+      // Define 1 readings to the pointer (This is defined by the freq numa user story mais à frente)
+      readings_size = 1;
+      readings = inicializar_array(20);
 
-            printf("[%d]", temp);
-            i++;
-        }
-        printf("\n");
-        printf("Valores do sensor de velocidade do vento:\n");
-        i = 0;
-                while(i<10){
-                    temp = sens_velc_vento(ult_val, comp_rand);
-                    ult_val = temp;
+      unsigned char ult_val = 20;
+      unsigned char value = sens_temp(ult_val, comp_rand);
 
-                    printf("[%d]", temp);
-                    i++;
-                }
-        printf("\n");
-                printf("Valores do sensor de direcao do vento:\n");
-                i = 0;
-                        while(i<10){
-                            temp = sens_dir_vento(ult_val, comp_rand);
-                            ult_val = temp;
+      for (int i = 0; i < 10; i++)
+      {
+            inserir_value (readings, readings_size, value);
+            ult_val = value;
+            value = sens_temp(ult_val, comp_rand);
+            readings_size++;
+      }
 
-                            printf("[%d]", temp);
-                            i++;
-                        }
-                        printf("\n");
-         printf("Valores do sensor de pluviosidade:\n");
-         i = 0;
-                 while(i<10){
-                     temp = sens_pluvio(20, ult_val, comp_rand);
-                     ult_val =
-                     printf("[%d]", temp);
-                     i++;
-                 }
+      print_array(readings, readings_size, sensor_name);
+
+      free_array(readings);
+      readings_size = 0;
+
+
+      // Sensor Direção do Vento:
+      sensor_name = "Direção do Vento";
+      value = 20;
+
+      for (int i = 0; i < 10; i++)
+            {
+                  inserir_value (readings, readings_size, value);
+                  ult_val = value;
+                  value = sens_dir_vento(ult_val, comp_rand);
+                  readings_size++;
+            }
+
+      print_array(readings, readings_size, sensor_name);
+      free_array(readings);
+      readings_size = 0;
+
+        // Sensor Velocidade do Vento:
+        //# unsigned char sens_velc_vento(unsigned char ult_velc_vento, char comp_rand);
+
+        sensor_name = "Velocidade do Vento";
+        value = 20;
+
+        for (int i = 0; i < 10; i++)
+              {
+                    inserir_value (readings, readings_size, value);
+                    ult_val = value;
+                    value = sens_velc_vento(ult_val, comp_rand);
+                    readings_size++;
+              }
+
+        print_array(readings, readings_size, sensor_name);
+        free_array(readings);
+        readings_size = 0;
+
+        // Sensor Pluviosidade:
+        // # unsigned char sens_pluvio(unsigned char ult_pluvio, char ult_temp, char comp_rand);
+
+        sensor_name = "Pluviosidade";
+        value = 20;
+        char ult_temp = 27;
+
+        for (int i = 0; i < 10; i++)
+              {
+                    inserir_value (readings, readings_size, value);
+                    ult_val = value;
+                    value = sens_pluvio(ult_val, ult_temp, comp_rand);
+                    readings_size++;
+              }
+
+        print_array(readings, readings_size, sensor_name);
+        free_array(readings);
+        readings_size = 1;
+
       return 0;
 }

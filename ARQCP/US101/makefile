@@ -7,9 +7,9 @@ RANDOM_SOURCES = random/random.c random/pcg32_random_r.s
 RANDOM_OBJECTS = random/random.o random/pcg32_random_r.o
 
 #-gerar dados para o sensor - folder sensor -
-SENSOR_GERAR_INCLUDES = sensor_gerar/sensores.h
-SENSOR_GERAR_SOURCES = sensor_gerar/sensores.s
-SENSOR_GERAR_OBJECTS = sensor_gerar/sensores.o
+SENSOR_GERAR_INCLUDES = sensor_gerar/sensores.h sensor_gerar/inserir_values.h
+SENSOR_GERAR_SOURCES = sensor_gerar/sensores.s sensor_gerar/inserir_values.c
+SENSOR_GERAR_OBJECTS = sensor_gerar/sensores.o sensor_gerar/inserir_values.o
 
 #-criar um sensor - folder sensor -
 SENSOR_INCLUDES = sensor/sensor.h
@@ -26,7 +26,7 @@ INCLUDES =  $(RANDOM_INCLUDES) $(SENSOR_GERAR_INCLUDES) $(SENSOR_INCLUDES) $(SEN
 SOURCES =  main.c $(RANDOM_SOURCES)  $(SENSOR_GERAR_SOURCES) $(SENSOR_SOURCES) $(SENSORES_SOURCES)
 OBJFILES = main.o $(RANDOM_OBJECTS)  $(SENSOR_GERAR_OBJECTS) $(SENSOR_OBJECTS) $(SENSORES_OBJECTS)
 
-OBJFILES2 = main.o random.o pcg32_random_r.o sensor.o sensores.o all_sensors.o
+OBJFILES2 = main.o random.o pcg32_random_r.o sensor.o sensores.o inserir_values.o all_sensors.o
 EXEC = ./mainprogram
 #--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#
 
