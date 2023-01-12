@@ -78,10 +78,10 @@ Configs *get_init_config(char *filename){
 
 }
 
-SensorsConfig *get_sensors_config(Configs *cfg, char *filename) {
+SensorsConfig *get_sensors_config(Configs *cfg) {
     
     // Open configuration file for read
-    FILE *fp = fopen(filename, "r");
+    FILE *fp = fopen("config/config.cfg", "r");
     if (fp == NULL) {
         perror("Error opening file");
         return NULL;
@@ -132,5 +132,9 @@ SensorsConfig *get_sensors_config(Configs *cfg, char *filename) {
     return scfg;  
 }
 
+unsigned char getFrequencyOfAType(char type, SensorsConfig *scfg) {
+    int i = (int)type;
+    return scfg[i].timefreq;
+}
 
 

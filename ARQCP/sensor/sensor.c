@@ -10,7 +10,8 @@
             sensor->max_limit = 0;
             sensor->min_limit = 0;
             sensor->frequency = 0;
-            sensor->readings_size = 1;
+            sensor->readings_size = 0;
+            sensor->readings_max_size = 0; //defined by freq
             sensor->readings = (unsigned short *) malloc(sizeof(unsigned short));
             return sensor;
         };
@@ -49,9 +50,19 @@
             return sensor->readings_size;
         };
 
+        unsigned short get_readings_max_size(Sensor *sensor){
+            return sensor->readings_max_size;
+        };
+
         unsigned short *get_readings(Sensor *sensor){
             return sensor->readings;
         };
+
+        //set reading size
+        void set_readings_size(Sensor *sensor, unsigned long new_readings_size){
+            sensor->readings_max_size = new_readings_size;
+        };
+
 
         // unsigned long read_frequency_from_config_properties(unsigned char *sensor_type) {
         //     // get the frequency from the config.properties file

@@ -62,6 +62,6 @@ int check_reading_limits(int min, int max, char maxerrors, unsigned char first_r
 #define S_NR_MEASURES 3
 #define S_TEMP_QTY 7
 #define NR_READS 20
-void get_s_measures(char *ptrInput, float *ptrOutput);
+//void get_s_measures(char *ptrInput, float *ptrOutput);
 
 #endif

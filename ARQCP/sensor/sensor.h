@@ -14,6 +14,7 @@ typedef struct
     unsigned long frequency;
     // tamanho do array de leituras
     unsigned long readings_size;
+    unsigned long readings_max_size;
     // array de leituras diárias 
     unsigned short *readings;
     //...
@@ -38,6 +39,7 @@ typedef struct
     * @return 0 if the size was defined, -1 if the size was not defined.
     */
 int define_readings_size(Sensor *sensor);
+void set_readings_size(Sensor *sensor, unsigned long new_readings_size);
 
 //Function to create a sensor
 Sensor *create_sensor(unsigned short id, unsigned char sensor_type);
@@ -49,5 +51,9 @@ void destroy_sensor(Sensor *sensor);
 void print_sensor(Sensor *sensor);
 
 void inserir_value_no_readings();
+
+unsigned short *get_readings(Sensor *sensor);
+unsigned short get_readings_size(Sensor *sensor);
+unsigned short get_readings_max_size(Sensor *sensor);
 
 #endif

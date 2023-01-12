@@ -77,13 +77,36 @@
         int type = id >> 8;
         //find the sensor
         for(int i = 0; i < idCount[type]; i++){
-            if(sensor_array[type][i].id == id){
+            //if(sensor_array[type][i].id == id){ (Commented: to change for all ids)
+            //if readings_size =0, set first value of readings to 20
+                    if (sensor_array[type][i].readings_size == 0){
+                        sensor_array[type][i].readings[0] = 20;
+                    }
                 sensor_array[type][i].frequency = frequency;
-                break;
-            }
+                //Redefine readings_size and *readings
+                //void set_readings_size(Sensor *sensor, unsigned long new_readings_size)
+                //set_readings_size(&sensor_array[type][i], (10/frequency));
+                set_readings_size(&sensor_array[type][i], 860/frequency);
+                //break;
+            //}
         }
     }
 
+        //inserir valor no readings
+    void insert_reading(Sensor **sensor_array, unsigned short id, unsigned short reading){
+
+        Sensor *s = get_sensor(sensor_array, id);
+
+         //Reallocation of the array to add one more value
+        s->readings = realloc(s->readings, (s->readings_size + 1) * sizeof(unsigned short));
+
+        // Add the reading to the array
+        s->readings[s->readings_size] = reading;
+
+        // Increment the number of readings
+        s->readings_size++;
+
+    }
 
     void print_sensor_array(Sensor **sensor_array){
         //printf array idCount
@@ -95,12 +118,16 @@
         for(int i = 0; i < 6; i++){
             if(sensor_array[i] != NULL){
                 for(int j = 0; j < idCount[i]; j++){
-                    printf("freq=%lds | ", sensor_array[i][j].frequency);
                     print_id (sensor_array[i][j].id);
+                    printf("freq=%lds | ", sensor_array[i][j].frequency);
+                    //printf("Readings_%d: ", sensor_array[i][j].id);
+                    //for(int k = 0; k < sensor_array[i][j].readings_size; k++){
+                    //    printf("[%d]", sensor_array[i][j].readings[k]);
+                    //}
+                    printf("\n");
                 }
             }
         }
-
     }
 
     Sensor *create_sensor_and_create_id(unsigned char sensor_type){
@@ -135,3 +162,13 @@
         }
         free(sensor_array);
     }
+
+    //get last value of readings
+    unsigned short get_last_value(Sensor *sensor){
+        if (sensor->readings_size == 0){
+            return 20;
+        }
+        return sensor->readings[sensor->readings_size - 1];
+    }
+
+

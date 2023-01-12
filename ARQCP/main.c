@@ -6,6 +6,7 @@
 #include "random/pcg32_random_r.h"
 #include "sensor_gerar/sensores.h"
 #include "sensor_gerar/inserir_values.h"
+#include "sensor/sensor.h"
 #include "sensores/all_sensors.h"
 
 #include "main.h"
@@ -15,17 +16,35 @@ uint64_t state;
 uint64_t inc;
 
 int wait_for_user_input();
-void get_s_measures(char *ptrInput, float *ptrOutput);
+ int export();
+void get_s_measures(unsigned short *sensor_readings, float *ptrOutput, unsigned long readings_size);
 
 int main()
 {
             //Read all info from config file in folder config
             char *path = "config/config.cfg";
             Configs *cfg = get_init_config(path);
-            SensorsConfig *scfg = get_sensors_config(cfg, path);
+            SensorsConfig *scfg = get_sensors_config(cfg);
+
 
             //Creates an array of sensors, organized by their type
             Sensor **sensors = create_sensor_array(S_NUMBER);
+
+            //Fill w/ some sensors of type 0
+            create_sensor_and_create_id(0);
+            create_sensor_and_create_id(0);
+            create_sensor_and_create_id(1);
+            create_sensor_and_create_id(2);
+            create_sensor_and_create_id(5);
+
+            unsigned char frequency = getFrequencyOfAType(0, scfg);
+            change_frequency(sensors, 1, frequency);
+            frequency = getFrequencyOfAType(1, scfg);
+            change_frequency(sensors, 257, frequency);
+            frequency = getFrequencyOfAType(2, scfg);
+            change_frequency(sensors, 513, frequency);
+            frequency = getFrequencyOfAType(5, scfg);
+            change_frequency(sensors, 1281, frequency);
 
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
          /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--* SPRINT 1 *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
@@ -34,6 +53,7 @@ int main()
                 /**
                  US101 Demo: Function that generates random numbers
                  **/
+                wait_for_user_input();
                 printf("US101: A function that generates random numbers\n\n");
 
                 int min = 0;
@@ -52,25 +72,111 @@ int main()
                 wait_for_user_input();
                 printf("US102: Generate values for sensor data\n\n");
 
+                /**US102: Gerar valores para os dados dos sensores **/
+
+                      char comp_rand = random();
+                      state = random();
+                      inc = random();
+
+                      //printf("Valor do comp_rand: %d\n", comp_rand);
+
+                      //Sensor *get_sensor(Sensor **sensor_array, unsigned short id);
+                      //GET DE UM SENSOR DE TEMPERATURA
+                      unsigned short id_t = 1;
+                      Sensor *s_t = get_sensor(sensors, id_t);
+                      unsigned long readings_size_s_t = get_readings_max_size(s_t);
+                      unsigned short *readings_s_t = get_readings(s_t);
+
+                      char string[] = "Sensor Temperatura";
+                      char *sensor_name;
+                      sensor_name = string;
+
+                      // Sensor Temperatura:
+                      //readings_p = inicializar_array(20);
+
+                      unsigned short ult_val = get_last_value(s_t);
+                      unsigned short value = sens_temp(ult_val, comp_rand);
+
+                      for (int i = 0; i < readings_size_s_t; i++)
+                      {
+                            readings_s_t = get_readings(s_t);
+                            insert_reading(sensors, 1, value);
+                            value = sens_temp(ult_val, comp_rand);
+                            ult_val = get_last_value(s_t);
+                      }
+
+                      //set_readings_size(s_t, readings_size_s_t);
+                      print_array(readings_s_t, readings_size_s_t, sensor_name);
+
+                      //free_array(readings);
+                      //readings_size = 0;
+
+                            unsigned long readings_size;
+                            unsigned short *readings;
+                            readings_size = 1;
+                                  readings = inicializar_array(20);
+                            // Sensor Direção do Vento:
+                            sensor_name = "Direção do Vento";
+                            value = 20;
+
+                            for (int i = 0; i < 10; i++)
+                                  {
+                                        inserir_value (readings, readings_size, value);
+                                        ult_val = value;
+                                        value = sens_dir_vento(ult_val, comp_rand);
+                                        readings_size++;
+                                  }
+
+                            print_array(readings, readings_size, sensor_name);
+                            free_array(readings);
+                            readings_size = 0;
+
+                              // Sensor Velocidade do Vento:
+                              //# unsigned char sens_velc_vento(unsigned char ult_velc_vento, char comp_rand);
+
+                              sensor_name = "Velocidade do Vento";
+                              value = 20;
+
+                              for (int i = 0; i < 10; i++)
+                                    {
+                                          inserir_value (readings, readings_size, value);
+                                          ult_val = value;
+                                          value = sens_velc_vento(ult_val, comp_rand);
+                                          readings_size++;
+                                    }
+
+                              print_array(readings, readings_size, sensor_name);
+                              free_array(readings);
+                              readings_size = 0;
+
+                              // Sensor Pluviosidade:
+                              // # unsigned char sens_pluvio(unsigned char ult_pluvio, char ult_temp, char comp_rand);
+
+                              sensor_name = "Pluviosidade";
+                              value = 20;
+                              char ult_temp = 27;
+
+                              for (int i = 0; i < 10; i++)
+                                    {
+                                          inserir_value (readings, readings_size, value);
+                                          ult_val = value;
+                                          value = sens_pluvio(ult_val, ult_temp, comp_rand);
+                                          readings_size++;
+                                    }
+
+                              print_array(readings, readings_size, sensor_name);
+                              free_array(readings);
+                              readings_size = 1;
+
 
                 /**
                 US103: Construir em C, a matriz diaria de resumo
                 **/
                 /** Para cada tipo de sensor deve ser determinado o valor máximo, o mínimo e a média das leituras **/
+
                 wait_for_user_input();
                 printf("US103: Build in C, the daily summary matrix\n\n");
-
-                // Matrixes for the sensors values
-
-                float s_measures[S_NUMBER][S_NR_MEASURES];
-                char s_temp_reads[S_TEMP_QTY][NR_READS];
-
-                char *ptrSensor = &s_temp_reads[0][0];
-                float *ptrSummary = &s_measures[0][0];
-
-                get_s_measures(ptrSensor, ptrSummary);
-
-                printf("\n");
+                printf("US104: It should be possible to establish maximum and minimum limits for the values produced by a sensor.\n");
 
                 /**
                 US104 - Deve ser possível estabelecer limites máximos e mínimos para os valores produzidos por um sensor.
@@ -80,10 +186,20 @@ int main()
                 // iniciando-se assim uma nova sequência de valores produzidos.
                 // Entende-se por reiniciar o sensor, descartar todas as leituras erradas e
                 // gerar uma nova semente para a geração aleatória de valores.
+
+                // Matrixes for the sensors values
+
+                float s_measures[S_NUMBER][S_NR_MEASURES]; //Summary matrix
+
+                float *ptrSummary = &s_measures[0][0];
+
+                unsigned short *ptrSensor = readings_s_t;
+
+                get_s_measures(ptrSensor, ptrSummary, readings_size_s_t);
+
+                printf("\n");
+
                 wait_for_user_input();
-                printf("US104: It should be possible to establish maximum and minimum limits for the values produced by a sensor.\n");
-
-
 
             /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
             /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--* SPRINT 2 *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
@@ -109,6 +225,13 @@ int main()
                     sleep(1);
                     create_sensor_and_create_id(5);
                     sleep(1);
+
+                    frequency = getFrequencyOfAType(0, scfg);
+                    change_frequency(sensors, 1, frequency);
+                    frequency = getFrequencyOfAType(2, scfg);
+                    change_frequency(sensors, 513, frequency);
+                    frequency = getFrequencyOfAType(5, scfg);
+                    change_frequency(sensors, 1281, frequency);
 
                     printf("\n");
                     printf("\n-->Printing all stored sensors...\n");
@@ -137,11 +260,19 @@ int main()
 
                     //change_frequency(Sensor **sensor_array, unsigned short id, unsigned short frequency);
 
+                    wait_for_user_input();
                     printf("\nChanging the frequency of a sensor...\n");
                     sleep(1);
                     //unsigned long freq = read_frequency_from_config_properties();
-                    change_frequency(sensors, 2, 10);
+                    //change_frequency(sensors, 2, 10);
+                    printf("\nYou can modify it on config file...\n");
+                    wait_for_user_input();
 
+                    Configs *cfg2 = get_init_config(path);
+                    SensorsConfig *scfg2 = get_sensors_config(cfg2);
+                    unsigned char anotherfreq = getFrequencyOfAType(0, scfg2);
+
+                    change_frequency(sensors, 0, anotherfreq);
                     print_sensor_array(sensors);
 
 
@@ -172,19 +303,19 @@ int main()
         return 0;
     }
 
-    void get_s_measures(char *ptrInput, float *ptrOutput){
+    void get_s_measures(unsigned short *sensor_readings, float *ptrOutput, unsigned long readings_size){
 
         int max, min, sum;
 
         max = 0;
         sum = 0;
 
-        char *ptr1;
+        unsigned short *ptr1;
         float *ptr4;
 
         float avg=0;
 
-        ptr1 = ptrInput;
+        ptr1 = sensor_readings;
         ptr4 = ptrOutput;
 
         // *************************
@@ -193,11 +324,7 @@ int main()
         // array using pointers
         // *************************
 
-        for(int x = 0; x < S_TEMP_QTY; x++){
-            if(x == 0){
-                max = *ptr1;
-            }
-            for(int y = 0; y < NR_READS; y++){
+            for(int y = 0; y < readings_size; y++){
                 if(max <= *ptr1) {
                     max = *ptr1;
                 }
@@ -207,8 +334,8 @@ int main()
                 sum = sum + *ptr1;
                 ptr1++;
             }
-        }
-          avg = (float)sum / (NR_READS*S_TEMP_QTY);
+
+          avg = (float)sum / (readings_size);
 
           printf("------------------\n");
           printf("TEMP MIN=%d\n",min);
