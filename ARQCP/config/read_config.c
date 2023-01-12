@@ -78,10 +78,10 @@ Configs *get_init_config(char *filename){
 
 }
 
-SensorsConfig *get_sensors_config(Configs *cfg) {
+SensorsConfig *get_sensors_config(Configs *cfg, char *filename) {
     
     // Open configuration file for read
-    FILE *fp = fopen("config.cfg", "r");
+    FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
         perror("Error opening file");
         return NULL;

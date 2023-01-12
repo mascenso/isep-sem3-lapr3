@@ -20,9 +20,9 @@ void get_s_measures(char *ptrInput, float *ptrOutput);
 int main()
 {
             //Read all info from config file in folder config
-            char *path = "config.cfg";
+            char *path = "config/config.cfg";
             Configs *cfg = get_init_config(path);
-            SensorsConfig *scfg = get_sensors_config(cfg);
+            SensorsConfig *scfg = get_sensors_config(cfg, path);
 
             //Creates an array of sensors, organized by their type
             Sensor **sensors = create_sensor_array(S_NUMBER);
@@ -83,15 +83,11 @@ int main()
                 wait_for_user_input();
                 printf("US104: It should be possible to establish maximum and minimum limits for the values produced by a sensor.\n");
 
-                printf("\ntodo\n");
-
 
 
             /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
             /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--* SPRINT 2 *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
             /** --*--*--*-*--*-*--*--*--*--*--*--*--*--*--*--*          *--*--*--*---*--*-*--**--*--*--*--*--*--*-- **/
-
-
 
                 /**
                 US110 - A informação de cada sensor deve ser armazenada numa estrutura

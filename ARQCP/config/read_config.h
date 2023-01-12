@@ -26,6 +26,6 @@
     } SensorsConfig;
 
     Configs *get_init_config(char *filename);
-    SensorsConfig *get_sensors_config(Configs *cfg);
+    SensorsConfig *get_sensors_config(Configs *cfg, char *filename);
 
 #endif

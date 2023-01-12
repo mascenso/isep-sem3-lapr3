@@ -1,11 +1,11 @@
 #*--*--* ARQCP *--*--* Function Demos *--*--*
 #Create a sensor struct function: US110
 #--#--#--#--#--#--#--#--#--#
-INCLUDES = sensor.h sensores.h
-SOURCES = main.c sensor.c sensores.s
-OBJFILES = main.o sensor.o sensores.o
+INCLUDES = sensor.h
+SOURCES = main.c sensor.c
+OBJFILES = main.o sensor.o
 
-OBJFILES2 = main.o sensor.o sensores.o
+OBJFILES2 = main.o sensor.o
 EXEC = ./sensor
 
 #--#--#--#--#--#--#--#--#--#

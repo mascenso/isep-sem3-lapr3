@@ -5,7 +5,7 @@
 
 int main(void) {
 
-    char *path = "config.cfg";
+    char *path = "config/config.cfg";
 
     Configs *cfg = get_init_config(path);
     if(cfg == NULL) return 1;
