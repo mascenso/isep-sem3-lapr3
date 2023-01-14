@@ -1,6 +1,6 @@
 package app.interfaces;
 
-public interface CONSTANT {
+public interface GlobalConstants {
     String PARAMS_FILENAME = "config.properties";
 
     final String HEADER_DISTANCES = "Loc id 1,Loc id 2, length (m)";

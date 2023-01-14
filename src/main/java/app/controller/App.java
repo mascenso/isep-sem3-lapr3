@@ -1,7 +1,7 @@
 package app.controller;
 import app.domain.model.Domain;
 import app.domain.model.UserRole;
-import app.interfaces.CONSTANT;
+import app.interfaces.GlobalConstants;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class App {
     private App()
     {
         Properties props = getProperties();
-        this.domain = new Domain(props.getProperty(CONSTANT.PARAMS_COMPANY_DESIGNATION));
+        this.domain = new Domain(props.getProperty(GlobalConstants.PARAMS_COMPANY_DESIGNATION));
         bootstrap();
     }
 
@@ -32,13 +32,13 @@ public class App {
         Properties props = new Properties();
 
         // Add default properties and values
-        props.setProperty(CONSTANT.PARAMS_COMPANY_DESIGNATION, "Biological Farms");
+        props.setProperty(GlobalConstants.PARAMS_COMPANY_DESIGNATION, "Biological Farms");
 
 
         // Read configured values
         try
         {
-            InputStream in = new FileInputStream(CONSTANT.PARAMS_FILENAME);
+            InputStream in = new FileInputStream(GlobalConstants.PARAMS_FILENAME);
             props.load(in);
             in.close();
         }

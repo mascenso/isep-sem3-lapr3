@@ -5,7 +5,7 @@ import app.domain.utils.RankableMap;
 import app.domain.model.SpotsNet.*;
 import app.domain.store.UserRoleStore;
 import app.domain.utils.graph.matrix.MatrixGraph;
-import app.interfaces.CONSTANT;
+import app.interfaces.GlobalConstants;
 import org.junit.platform.commons.util.StringUtils;
 
 import java.io.IOException;
@@ -53,10 +53,10 @@ public class Domain {
      */
     public void constructMainGraph() throws IOException {
         CsvParser inputDataGraph = new CsvParser();
-        inputDataGraph.getCSVdata(Configurations.getFile(CONSTANT.FILE_CLIENTES_PRODUTORES),
-                                  Configurations.getDelimiter(CONSTANT.DELIMITERC),this);
-        inputDataGraph.getCSVdata(Configurations.getFile(CONSTANT.FILE_DISTANCES),
-                                  Configurations.getDelimiter(CONSTANT.DELIMITERC),this);
+        inputDataGraph.getCSVdata(Configurations.getFile(GlobalConstants.FILE_CLIENTES_PRODUTORES),
+                                  Configurations.getDelimiter(GlobalConstants.DELIMITERC),this);
+        inputDataGraph.getCSVdata(Configurations.getFile(GlobalConstants.FILE_DISTANCES),
+                                  Configurations.getDelimiter(GlobalConstants.DELIMITERC),this);
     }
 
     /**

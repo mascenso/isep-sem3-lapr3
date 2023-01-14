@@ -1,6 +1,6 @@
 package app.domain.utils;
 
-import app.interfaces.CONSTANT;
+import app.interfaces.GlobalConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * @authors Daniel Aires, Fernando Ribeiro, José Silva, Manuel Marques, Mariana Rocha
  */
-public abstract class Configurations implements CONSTANT {
+public abstract class Configurations implements GlobalConstants {
 
     public static String getFile(String type)
             throws IOException {

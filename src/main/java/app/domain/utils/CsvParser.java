@@ -5,7 +5,7 @@ import app.domain.model.Domain;
 import app.domain.model.Entity;
 import app.domain.model.Route;
 import app.domain.model.Spot;
-import app.interfaces.CONSTANT;
+import app.interfaces.GlobalConstants;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @authors Daniel Aires, Fernando Ribeiro, José Silva, Manuel Marques, Mariana Rocha
  */
-public class CsvParser implements CONSTANT {
+public class CsvParser implements GlobalConstants {
 
     /***
      * Reads a CSV file and returns a list of String arrays
@@ -86,7 +86,7 @@ public class CsvParser implements CONSTANT {
 
                         //Different behaviour
                         switch(firstLine) {
-                            case CONSTANT.HEADER_CLIENTES_PRODUTORES:
+                            case GlobalConstants.HEADER_CLIENTES_PRODUTORES:
                                 if(dataValidationsClientesProdutores(data)) {
                                     loadedData = loadedData + 1;
                                     // if all data is valid the objects are created and added to Graph
@@ -105,7 +105,7 @@ public class CsvParser implements CONSTANT {
                                     }
                                 }
                                 break;
-                            case CONSTANT.HEADER_DISTANCES:
+                            case GlobalConstants.HEADER_DISTANCES:
                                 //update data already loaded
                                 if(dataValidationsDistancias(data)) {
                                     // if all data is valid the objects are created and added to Graph
@@ -120,7 +120,7 @@ public class CsvParser implements CONSTANT {
                                     }
                                 }
                                 break;
-                            case CONSTANT.HEADER_CABAZES:
+                            case GlobalConstants.HEADER_CABAZES:
 
                                 //todo:sprint2
                                 if(dataValidationsCabazes(data)) {

@@ -2,7 +2,7 @@ package app.ui.console;
 
 import app.controller.SelectRolesController;
 import app.domain.model.UserRole;
-import app.interfaces.CONSTANT;
+import app.interfaces.GlobalConstants;
 import app.ui.console.utils.Utils;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,8 +43,8 @@ public class SelectRoleUI implements Runnable{
     private List<MenuItem> getMenuItemForRoles()
     {
         List<MenuItem> rolesUI = new ArrayList<>();
-        rolesUI.add(new MenuItem(CONSTANT.ROLE_MANAGER, new ManagerUI()));
-        rolesUI.add(new MenuItem(CONSTANT.ROLE_FARMER, new ManagerUI()));
+        rolesUI.add(new MenuItem(GlobalConstants.ROLE_MANAGER, new ManagerUI()));
+        rolesUI.add(new MenuItem(GlobalConstants.ROLE_FARMER, new ManagerUI()));
         // To complete with other user roles and related RoleUI
 
         //

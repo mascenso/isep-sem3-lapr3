@@ -1,20 +1,17 @@
 package app.domain.utils;
 
-import app.interfaces.CONSTANT;
-
-
-import java.time.LocalDate;
+import app.interfaces.GlobalConstants;
 
 /**
  * @authors Daniel Aires, Fernando Ribeiro, José Silva, Manuel Marques, Mariana Rocha
  */
-public abstract class Validations implements CONSTANT {
+public abstract class Validations implements GlobalConstants {
 
     public static boolean validString(String s) {
         if(s == null || s.length() == 0) {
             return false;
         }
-        if(s.length() > CONSTANT.MAXSTRINGSIZE) {
+        if(s.length() > GlobalConstants.MAXSTRINGSIZE) {
             return false;
         }
         return true;
@@ -25,7 +22,7 @@ public abstract class Validations implements CONSTANT {
             return false;
         }
         String subLocID=s.substring(0,2);
-        if(!subLocID.equals(CONSTANT.LOCID)) {
+        if(!subLocID.equals(GlobalConstants.LOCID)) {
             return false;
         }
         try {
@@ -92,7 +89,7 @@ public abstract class Validations implements CONSTANT {
         catch(NumberFormatException e) {
             return false;
         }
-        if(q <= 0 || q > CONSTANT.MAXDISTANCE) {
+        if(q <= 0 || q > GlobalConstants.MAXDISTANCE) {
             return false;
         }
         return true;
